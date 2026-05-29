@@ -1,0 +1,19 @@
+{
+  "name": "@tsaibook/ch01-hello-ai",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "build": "tsc",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.0.0",
+    "hono": "^4.10.0",
+    "openai": "^6.38.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0"
+  }
+}

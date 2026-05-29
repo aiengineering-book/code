@@ -1,0 +1,69 @@
+// #book ch04-useauth-hook
+// 使用示例：类型安全的登录调用
+// ch04-fullstack-basics/web/src/hooks/useAuth.ts
+import { useCallback, useState } from 'react';
+import { api, clearToken, setToken } from '../lib/api.js';
+
+export function useAuth() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const login = useCallback(async (email: string, password: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await api.api.auth.login.$post({
+        json: { email, password },
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error((data as any).error?.message ?? '登录失败');
+      }
+
+      const { token } = await res.json();
+      setToken(token);
+      return true;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '登录失败');
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const register = useCallback(
+    async (name: string, email: string, password: string) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await api.api.auth.register.$post({
+          json: { name, email, password },
+        });
+
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error((data as any).error?.message ?? '注册失败');
+        }
+
+        const { token } = await res.json();
+        setToken(token);
+        return true;
+      } catch (err) {
+        setError(err instanceof Error ? err.message : '注册失败');
+        return false;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
+
+  const logout = useCallback(() => {
+    clearToken();
+    window.location.href = '/login';
+  }, []);
+
+  return { login, register, logout, loading, error };
+}
+// #endbook

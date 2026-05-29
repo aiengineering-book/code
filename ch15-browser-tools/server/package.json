@@ -1,0 +1,23 @@
+{
+  "name": "@tsaibook/ch15-browser-tools-server",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "demo": "tsx src/examples/code-analyzer.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.0.0",
+    "dotenv": "^17.0.0",
+    "hono": "^4.10.0",
+    "openai": "^6.38.0",
+    "playwright": "^1.52.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0"
+  }
+}
