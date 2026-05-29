@@ -1,0 +1,10 @@
+{
+  "name": "@tsaibook/ch09-embedding-web",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'ch09 is backend-focused, no frontend yet'",
+    "build": "echo 'ch09 is backend-focused, no frontend yet'"
+  }
+}

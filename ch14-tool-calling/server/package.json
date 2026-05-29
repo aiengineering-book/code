@@ -1,0 +1,26 @@
+{
+  "name": "@tsaibook/ch14-tool-calling-server",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "demo": "tsx src/examples/ask-agent-v2.ts"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.0",
+    "dotenv": "^17.0.0",
+    "hono": "^4.10.0",
+    "@hono/node-server": "^2.0.0",
+    "openai": "^6.38.0",
+    "postgres": "^3.4.0",
+    "undici": "^7.0.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "drizzle-kit": "^0.31.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^3.0.0"
+  }
+}

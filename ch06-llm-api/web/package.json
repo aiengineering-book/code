@@ -1,0 +1,16 @@
+{
+  "name": "@tsaibook/ch06-llm-api-web",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'TODO: web dev server'",
+    "build": "echo 'TODO: web build'"
+  },
+  "dependencies": {
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0"
+  }
+}
