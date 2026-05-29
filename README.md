@@ -9,7 +9,7 @@ This repository contains the companion code for *Full-Stack AI Agents with TypeS
 
 ## Requirements
 
-- Node.js >= 20
+- Node.js >= 22
 - pnpm >= 9
 - OpenAI API Key
 - Docker (from Chapter 4 onward — required for PostgreSQL + pgvector)
