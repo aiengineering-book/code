@@ -139,7 +139,9 @@ function LoginForm({ onLogin }: { onLogin: () => void }) {
           }}
           onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
         >
-          {mode === 'login' ? "Don't have an account? Register" : 'Already have an account? Sign in'}
+          {mode === 'login'
+            ? "Don't have an account? Register"
+            : 'Already have an account? Sign in'}
         </div>
       </form>
     </div>

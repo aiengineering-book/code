@@ -1,4 +1,5 @@
-// #book-ref ch23-observability
+// #book-ref ch23-production/server/src/lib/observability.ts
+
 import { Langfuse } from 'langfuse';
 import { env } from '../env.js';
 
@@ -15,4 +16,3 @@ export const langfuse = new Langfuse({
 process.on('beforeExit', async () => {
   await langfuse.shutdownAsync();
 });
-// #endbook-ref

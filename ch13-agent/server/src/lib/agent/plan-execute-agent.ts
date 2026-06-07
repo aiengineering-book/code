@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/plan-execute-agent.ts
+// ch13-agent/server/src/lib/agent/plan-execute-agent.ts
 // #book ch13-plan-execute
 // ch13-agent/server/src/lib/agent/plan-execute-agent.ts
 
@@ -15,7 +15,10 @@ const PlanSchema = z.object({
       description: z.string().describe('What this step does'),
       tool: z.string().describe('Which tool to use'),
       params: z.record(z.unknown()).describe('Tool parameters'),
-      dependsOn: z.array(z.string()).default([]).describe('IDs of prerequisite steps'),
+      dependsOn: z
+        .array(z.string())
+        .default([])
+        .describe('IDs of prerequisite steps'),
     }),
   ),
 });
@@ -70,7 +73,9 @@ Steps that don't depend on each other can have empty dependsOn lists (they can r
       );
 
       if (ready.length === 0) {
-        throw new Error('Circular dependency detected in plan — cannot continue');
+        throw new Error(
+          'Circular dependency detected in plan — cannot continue',
+        );
       }
 
       // Execute all ready steps in parallel

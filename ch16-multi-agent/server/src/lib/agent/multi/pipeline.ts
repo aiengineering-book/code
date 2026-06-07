@@ -87,7 +87,7 @@ export class AgentPipeline {
     return {
       finalOutput: currentOutput,
       stageResults,
-      success: true,
+      success: stageResults.every((s) => s.retries <= this.maxRetries),
     };
   }
 }

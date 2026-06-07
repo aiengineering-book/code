@@ -10,7 +10,8 @@ const researchPipeline = new AgentPipeline(
     // Stage 1: Collect information
     {
       name: 'Information Gathering',
-      description: 'You are a researcher responsible for collecting information about a given topic from the web.',
+      description:
+        'You are a researcher responsible for collecting information about a given topic from the web.',
       tools: [fetchWebpageTool],
       maxSteps: 6,
       buildPrompt: (_, originalInput) =>
@@ -20,7 +21,8 @@ const researchPipeline = new AgentPipeline(
     // Stage 2: Data analysis
     {
       name: 'Data Analysis',
-      description: 'You are a data analyst responsible for extracting key insights from collected information.',
+      description:
+        'You are a data analyst responsible for extracting key insights from collected information.',
       tools: [runNodeCodeTool],
       maxSteps: 4,
       buildPrompt: (previousOutput, originalInput) =>
@@ -34,7 +36,8 @@ const researchPipeline = new AgentPipeline(
     // Stage 3: Report generation
     {
       name: 'Report Generation',
-      description: 'You are a technical writer responsible for organizing analysis results into a structured report.',
+      description:
+        'You are a technical writer responsible for organizing analysis results into a structured report.',
       tools: [writeFileTool],
       maxSteps: 3,
       buildPrompt: (previousOutput, originalInput) =>

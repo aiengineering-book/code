@@ -1,5 +1,4 @@
-// #book-ref ch12-kb-access
-// ch12-production-rag/server/src/middleware/knowledge-base-access.ts
+// #book-ref ch12-production-rag/server/src/middleware/knowledge-base-access.ts
 
 import { and, eq } from 'drizzle-orm';
 import type { MiddlewareHandler } from 'hono';
@@ -48,7 +47,9 @@ export function requireKnowledgeBaseAccess(
     });
 
     if (!member || ROLE_LEVEL[member.role] < ROLE_LEVEL[minRole]) {
-      throw new UnauthorizedError('Access to this knowledge base is not permitted');
+      throw new UnauthorizedError(
+        'Access to this knowledge base is not permitted',
+      );
     }
 
     c.set('knowledgeBase', kb);

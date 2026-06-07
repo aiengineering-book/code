@@ -45,7 +45,9 @@ export class IngestionService {
       const parsed = await parseDocument(fileBuffer, filename, mimeType);
 
       if (!parsed.text.trim()) {
-        throw new Error('Document is empty after parsing — possibly a scanned or encrypted file');
+        throw new Error(
+          'Document is empty after parsing — possibly a scanned or encrypted file',
+        );
       }
 
       // 3. Update document metadata
@@ -99,7 +101,7 @@ export class IngestionService {
           endChar: chunk.endChar,
         },
         chunkIndex: chunk.index,
-        embedding: embeddings[i]?.embedding,
+        embedding: embeddings[i]!.embedding,
       }));
 
       await storeChunks(chunksToStore);
@@ -178,7 +180,10 @@ export class IngestionService {
           success.push(task.documentId);
         } else {
           failed.push(task.documentId);
-          console.error(`[${task.documentId}] Processing failed:`, result.reason);
+          console.error(
+            `[${task.documentId}] Processing failed:`,
+            result.reason,
+          );
         }
       }
     }

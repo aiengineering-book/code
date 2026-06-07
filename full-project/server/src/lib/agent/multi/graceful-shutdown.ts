@@ -1,5 +1,4 @@
-// #book-ref ch16-graceful-shutdown
-// ch16-multi-agent/server/src/lib/agent/multi/graceful-shutdown.ts
+// #book-ref ch16-multi-agent/server/src/lib/agent/multi/graceful-shutdown.ts
 
 export async function runWithGracefulShutdown<T>(
   work: (signal: AbortSignal) => Promise<T>,

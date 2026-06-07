@@ -1,4 +1,5 @@
 // #book ch24-agent-route
+// full-project/server/src/routes/agent.ts
 
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
@@ -48,7 +49,8 @@ const agentRouter = new Hono<Env>()
           await stream.writeSSE({
             event: 'error',
             data: JSON.stringify({
-              message: error instanceof Error ? error.message : 'Execution failed',
+              message:
+                error instanceof Error ? error.message : 'Execution failed',
             }),
           });
         }

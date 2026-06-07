@@ -1,4 +1,4 @@
-// packages/server/src/examples/calculator-agent.ts
+// ch13-agent/server/src/examples/calculator-agent.ts
 // #book ch13-calculator-agent
 // ch13-agent/server/src/examples/calculator-agent.ts
 

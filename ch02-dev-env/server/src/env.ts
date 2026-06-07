@@ -10,6 +10,7 @@ const EnvSchema = z.object({
   NODE_ENV: z
     .enum(['development', 'production', 'test'])
     .default('development'),
+  JWT_SECRET: z.string().min(32, 'JWT_SECRET must be at least 32 characters'),
 });
 
 const parsed = EnvSchema.safeParse(process.env);

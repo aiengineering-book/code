@@ -1,5 +1,5 @@
-// #book-ref ch20-mcp-tool-adapter
-// ch20-mcp-client/server/src/lib/mcp/mcp-tool-adapter.ts
+// #book-ref ch20-mcp-client/server/src/lib/mcp/mcp-tool-adapter.ts
+
 import type { Tool } from '../agent/react-agent.js';
 import type { ManagedTool } from './manager.js';
 import { mcpManager } from './manager.js';

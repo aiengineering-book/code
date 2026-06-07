@@ -1,6 +1,7 @@
 // #book-ref ch09-embedding/server/src/lib/similarity.ts
+
 /**
- * Compute the cosine similarity between two vectors
+ * Compute cosine similarity between two vectors
  */
 export function cosineSimilarity(a: number[], b: number[]): number {
   if (a.length !== b.length) {
@@ -24,7 +25,7 @@ export function cosineSimilarity(a: number[], b: number[]): number {
 }
 
 /**
- * Find the topK most similar candidates to the query vector
+ * Find the top-K most similar candidates to the query vector
  */
 export function findTopK<T extends { embedding: number[] }>(
   query: number[],

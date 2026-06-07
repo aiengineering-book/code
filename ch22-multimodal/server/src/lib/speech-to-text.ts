@@ -105,7 +105,8 @@ export async function* transcribeStream(
   audioChunks: AsyncIterable<Buffer>,
   options: { language?: string; prompt?: string } = {},
 ): AsyncGenerator<string> {
-  const _CHUNK_DURATION_MS = 30_000;
+  // Chunking is size-based (1MB), not time-based.
+  // For time-based chunking, the frontend should send chunks at fixed intervals.
   const CHUNK_SIZE = 1024 * 1024; // 1MB per chunk
 
   let buffer = Buffer.alloc(0);

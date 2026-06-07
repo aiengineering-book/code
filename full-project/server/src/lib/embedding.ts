@@ -1,4 +1,5 @@
-// #book-ref ch12-production-rag/server/src/lib/embedding.ts
+// #book-ref ch09-embedding/server/src/lib/embedding.ts
+
 import { openai } from './openai.js';
 import { withRetry } from './retry.js';
 
@@ -25,11 +26,13 @@ export async function embedText(text: string): Promise<number[]> {
     }),
   );
 
-  return result.data[0]?.embedding;
+  const embedding = result.data[0]?.embedding;
+  if (!embedding) throw new Error('Embedding API returned no data');
+  return embedding;
 }
 
 /**
- * Generate embeddings in bulk (auto-batches to stay within API limits)
+ * Generate embedding vectors for a batch of texts (auto-splits to stay within API limits)
  */
 export async function embedBatch(
   texts: string[],
@@ -51,14 +54,14 @@ export async function embedBatch(
     for (let j = 0; j < batch.length; j++) {
       results.push({
         text: batch[j]!,
-        embedding: response.data[j]?.embedding,
-        tokens: response.usage.total_tokens / batch.length, // Average token count (estimate)
+        embedding: response.data[j]!.embedding,
+        tokens: response.usage.total_tokens / batch.length, // Average tokens (estimate)
       });
     }
 
     onProgress?.(Math.min(i + BATCH_SIZE, texts.length), texts.length);
 
-    // Small pause between batches to avoid rate limiting
+    // Brief pause between batches to avoid rate limits
     if (i + BATCH_SIZE < texts.length) {
       await new Promise((r) => setTimeout(r, 200));
     }

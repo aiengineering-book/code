@@ -1,5 +1,5 @@
-// #book-ref ch10-document-upload
-// ch10-ingestion/web/src/components/DocumentUpload.tsx
+// #book-ref ch10-ingestion/web/src/components/DocumentUpload.tsx
+
 import { useCallback, useState } from 'react';
 import { getToken } from '../lib/api.js';
 

@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/tool-observer.ts
+// ch14-tool-calling/server/src/lib/agent/tool-observer.ts
 // #book ch14-tool-observer
 // ch14-tool-calling/server/src/lib/agent/tool-observer.ts
 
@@ -35,6 +35,7 @@ export async function logToolCall(log: ToolCallLog): Promise<void> {
 
 // Query tool call statistics (for monitoring dashboard)
 export async function getToolStats(userId: string, days = 7) {
+  const safeDays = Math.max(1, Math.min(365, Math.floor(Number(days))));
   const result = await db.execute(sql`
     SELECT
       tool_name,
@@ -43,7 +44,7 @@ export async function getToolStats(userId: string, days = 7) {
       SUM(CASE WHEN success THEN 1 ELSE 0 END)::float / COUNT(*) as success_rate
     FROM tool_call_logs
     WHERE user_id = ${userId}
-      AND created_at > NOW() - INTERVAL '${sql.raw(String(days))} days'
+      AND created_at > NOW() - INTERVAL '1 day' * ${safeDays}
     GROUP BY tool_name
     ORDER BY call_count DESC
   `);

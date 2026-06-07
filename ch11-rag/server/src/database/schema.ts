@@ -1,4 +1,5 @@
 // #book-ref ch10-ingestion/server/src/database/schema.ts
+
 import {
   index,
   integer,
@@ -44,10 +45,10 @@ export type DocumentChunk = typeof documentChunks.$inferSelect;
 import { pgEnum } from 'drizzle-orm/pg-core';
 
 export const documentStatusEnum = pgEnum('document_status', [
-  'pending', // awaiting processing
-  'processing', // being processed
-  'ready', // processing complete, available for retrieval
-  'failed', // processing failed
+  'pending', // Waiting to be processed
+  'processing', // Currently processing
+  'ready', // Processing complete, searchable
+  'failed', // Processing failed
 ]);
 
 export const documents = pgTable('documents', {
@@ -55,7 +56,7 @@ export const documents = pgTable('documents', {
   userId: uuid('user_id').notNull(),
   // Original filename
   filename: text('filename').notNull(),
-  // File type
+  // MIME type
   mimeType: text('mime_type').notNull(),
   // File size in bytes
   fileSize: integer('file_size').notNull(),
@@ -63,7 +64,7 @@ export const documents = pgTable('documents', {
   status: documentStatusEnum('status').notNull().default('pending'),
   // Error message (when processing fails)
   errorMessage: text('error_message'),
-  // Chunk count (after processing completes)
+  // Chunk count (populated after processing completes)
   chunkCount: integer('chunk_count'),
   // Total token count (for cost tracking)
   totalTokens: integer('total_tokens'),

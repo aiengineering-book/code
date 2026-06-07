@@ -34,7 +34,9 @@ export async function vectorSearch(
 
   // 2. Vector similarity query
   // cosineDistance returns distance (0 = same, 2 = opposite) — convert to similarity
-  const similarity = sql<number>`1 - (${cosineDistance(documentChunks.embedding, queryEmbedding)})`;
+  // Define once and reuse in SELECT, WHERE, and ORDER BY to avoid repeated computation
+  const distance = cosineDistance(documentChunks.embedding, queryEmbedding);
+  const similarity = sql<number>`1 - (${distance})`;
 
   const results = await db
     .select({
@@ -48,9 +50,7 @@ export async function vectorSearch(
     .from(documentChunks)
     .where(
       and(
-        // Filter out low-similarity results
-        sql`1 - (${cosineDistance(documentChunks.embedding, queryEmbedding)}) > ${minScore}`,
-        // Optional: restrict to a specific document
+        sql`${similarity} > ${minScore}`,
         documentId ? eq(documentChunks.documentId, documentId) : undefined,
       ),
     )

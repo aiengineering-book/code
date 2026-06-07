@@ -1,4 +1,5 @@
 // #book-ref ch11-rag/server/src/env.ts
+
 import 'dotenv/config';
 
 function required(key: string): string {

@@ -1,5 +1,5 @@
-// #book-ref ch17-code-execution-tools
-// ch17-coding-agent/server/src/lib/agent/tools/code-execution-tools.ts
+// #book-ref ch17-coding-agent/server/src/lib/agent/tools/code-execution-tools.ts
+
 import { exec } from 'node:child_process';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -14,17 +14,20 @@ const execAsync = promisify(exec);
  */
 export const runTestsTool: Tool = {
   name: 'run_tests',
-  description: 'Run the project\'s unit tests and return the results. Supports Vitest and Jest.',
+  description:
+    "Run the project's unit tests and return the results. Supports Vitest and Jest.",
   inputSchema: {
     type: 'object',
     properties: {
       testPattern: {
         type: 'string',
-        description: 'Test file glob pattern (optional), e.g. "src/utils/*.test.ts"',
+        description:
+          'Test file glob pattern (optional), e.g. "src/utils/*.test.ts"',
       },
       testName: {
         type: 'string',
-        description: 'Run only tests whose name contains this string (optional)',
+        description:
+          'Run only tests whose name contains this string (optional)',
       },
       repoPath: {
         type: 'string',
@@ -102,13 +105,15 @@ export const runTestsTool: Tool = {
  */
 export const lintCodeTool: Tool = {
   name: 'lint_code',
-  description: 'Perform static analysis on a code file, checking for syntax errors and style issues.',
+  description:
+    'Perform static analysis on a code file, checking for syntax errors and style issues.',
   inputSchema: {
     type: 'object',
     properties: {
       filePath: {
         type: 'string',
-        description: 'Path of the file to analyze (relative to working directory)',
+        description:
+          'Path of the file to analyze (relative to working directory)',
       },
       repoPath: {
         type: 'string',
@@ -155,13 +160,15 @@ export const lintCodeTool: Tool = {
  */
 export const applyCodeFixTool: Tool = {
   name: 'apply_code_fix',
-  description: 'Write fixed code to a file (in the sandbox workspace, does not affect the real codebase).',
+  description:
+    'Write fixed code to a file (in the sandbox workspace, does not affect the real codebase).',
   inputSchema: {
     type: 'object',
     properties: {
       filePath: {
         type: 'string',
-        description: 'Path of the file to fix (relative to the sandbox working directory)',
+        description:
+          'Path of the file to fix (relative to the sandbox working directory)',
       },
       fixedContent: {
         type: 'string',

@@ -43,7 +43,8 @@ async function runGit(args: string, repoPath: string): Promise<string> {
  */
 export const gitDiffTool: Tool = {
   name: 'git_diff',
-  description: 'Get Git code diff. Can compare branches, commits, or working tree changes.',
+  description:
+    'Get Git code diff. Can compare branches, commits, or working tree changes.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -74,23 +75,15 @@ export const gitDiffTool: Tool = {
       repoPath?: string;
     };
 
-    const args = [
-      'diff',
-      '--stat', // Show file change statistics
-      target,
-      filePath ? `-- ${filePath}` : '',
-    ]
-      .filter(Boolean)
-      .join(' ');
+    const buildDiffArgs = (extraFlags: string[]) =>
+      ['diff', ...extraFlags, target, filePath ? `-- ${filePath}` : '']
+        .filter(Boolean)
+        .join(' ');
 
-    const stat = await runGit(args, repoPath);
+    const stat = await runGit(buildDiffArgs(['--stat']), repoPath);
 
     // Get detailed diff (line-limited)
-    const detailArgs = ['diff', target, filePath ? `-- ${filePath}` : '']
-      .filter(Boolean)
-      .join(' ');
-
-    const detail = await runGit(detailArgs, repoPath);
+    const detail = await runGit(buildDiffArgs([]), repoPath);
     const lines = detail.split('\n');
     const truncated = lines.length > 300;
     const preview = lines.slice(0, 300).join('\n');
@@ -161,7 +154,8 @@ export const gitShowTool: Tool = {
     properties: {
       ref: {
         type: 'string',
-        description: 'Commit hash, branch name, or tag, e.g. "abc123" or "HEAD~1"',
+        description:
+          'Commit hash, branch name, or tag, e.g. "abc123" or "HEAD~1"',
       },
       filePath: {
         type: 'string',

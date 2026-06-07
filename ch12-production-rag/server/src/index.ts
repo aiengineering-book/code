@@ -1,4 +1,3 @@
-// #book-ref ch11-rag/server/src/index.ts
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { env } from './env.js';

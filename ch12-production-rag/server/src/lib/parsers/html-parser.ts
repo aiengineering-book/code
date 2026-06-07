@@ -1,4 +1,5 @@
-// #book-ref ch11-rag/server/src/lib/parsers/html-parser.ts
+// #book-ref ch10-ingestion/server/src/lib/parsers/html-parser.ts
+
 import { parse as parseHtml } from 'node-html-parser';
 import type { DocumentParser, ParsedDocument } from './types.js';
 
@@ -19,12 +20,12 @@ export const htmlParser: DocumentParser = {
       .querySelector('meta[name="description"]')
       ?.getAttribute('content');
 
-    // Remove unwanted elements
+    // Remove non-content elements
     root
       .querySelectorAll('script, style, nav, footer, header, aside')
       .forEach((el) => el.remove());
 
-    // Extract the main content area (if present)
+    // Extract main content area (prefer semantic elements)
     const mainContent =
       root.querySelector('main, article, .content, #content') ??
       root.querySelector('body') ??

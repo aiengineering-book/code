@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useChat } from '../hooks/useChat.js';
+import { getToken } from '../lib/api.js';
 import { useChatStore } from '../stores/chat-store.js';
 
 export function ChatInterface() {
@@ -10,11 +11,13 @@ export function ChatInterface() {
 
   useEffect(() => {
     // Load conversation list on mount
+    const token = getToken();
+    if (!token) return;
     fetch('/api/chatbot/conversations', {
-      headers: { Authorization: 'Bearer demo-token' },
+      headers: { Authorization: `Bearer ${token}` },
     })
-      .then((res) => res.json())
-      .then((data) => store.setConversations(data))
+      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+      .then((data) => store.setConversations(Array.isArray(data) ? data : []))
       .catch(console.error);
   }, [store.setConversations]);
 
@@ -50,7 +53,7 @@ export function ChatInterface() {
     <div
       style={{
         display: 'flex',
-        height: '100vh',
+        height: '100%',
         fontFamily: 'system-ui, sans-serif',
       }}
     >
@@ -62,6 +65,8 @@ export function ChatInterface() {
           padding: 16,
           overflowY: 'auto',
           background: '#f9f9f9',
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
         <button

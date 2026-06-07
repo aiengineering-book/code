@@ -1,5 +1,4 @@
-// #book-ref ch12-update-service
-// ch12-production-rag/server/src/services/update-service.ts
+// #book-ref ch12-production-rag/server/src/services/update-service.ts
 
 import { eq } from 'drizzle-orm';
 import { db } from '../database/client.js';
@@ -56,7 +55,11 @@ export class DocumentUpdateService {
 
     // Time-consuming embedding runs outside the transaction
     await ingestionService.ingest(documentId, newBuffer, filename, mimeType);
-    await bm25Service.build(); // Rebuild BM25 index
+    try {
+      await bm25Service.build();
+    } catch (err) {
+      console.warn('[update] BM25 rebuild failed, will retry on next query:', err);
+    }
 
     return {
       updated: true,

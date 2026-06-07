@@ -1,5 +1,4 @@
-// #book-ref ch04-auth-routes
-// ch04-fullstack-basics/server/src/routes/auth.ts
+// #book-ref ch04-fullstack-basics/server/src/routes/auth.ts
 
 import { zValidator } from '@hono/zod-validator';
 import { eq } from 'drizzle-orm';
@@ -53,7 +52,9 @@ const auth = new Hono<Env>()
         createdAt: users.createdAt,
       });
 
-    const token = signToken({ userId: user?.id, email: user?.email });
+    if (!user) throw new ValidationError('Failed to create user');
+
+    const token = signToken({ userId: user.id, email: user.email });
 
     return c.json({ user, token }, 201);
   })

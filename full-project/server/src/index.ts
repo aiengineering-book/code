@@ -104,7 +104,9 @@ async function initializeServices() {
 
 // Start server
 serve({ fetch: app.fetch, port: env.PORT }, (info) => {
-  console.log(`🚀 AI Workbench backend running at http://localhost:${info.port}`);
+  console.log(
+    `🚀 AI Workbench backend running at http://localhost:${info.port}`,
+  );
   initializeServices();
 });
 

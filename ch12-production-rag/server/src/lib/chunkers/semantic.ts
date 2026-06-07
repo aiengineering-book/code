@@ -1,11 +1,12 @@
-// #book-ref ch11-rag/server/src/lib/chunkers/semantic.ts
+// #book-ref ch10-ingestion/server/src/lib/chunkers/semantic.ts
+
 import { embedBatch } from '../embedding.js';
 import { cosineSimilarity } from '../similarity.js';
 import type { TextChunk } from './fixed-size.js';
 
 /**
- * Semantic chunking: merge similar sentences, split dissimilar ones
- * @param breakpointThreshold Split at this point when adjacent sentence similarity falls below this value
+ * Semantic chunking: group similar sentences, split on topic transitions
+ * @param breakpointThreshold Split when adjacent sentence similarity drops below this
  */
 export async function semanticChunk(
   text: string,
@@ -16,9 +17,9 @@ export async function semanticChunk(
 ): Promise<TextChunk[]> {
   const { maxChunkSize = 1500, breakpointThreshold = 0.7 } = options;
 
-  // 1. Split into sentences (handles both CJK and Latin punctuation)
+  // 1. Split into sentences (handles common punctuation)
   const sentences = text
-    .split(/(?<=[。！？.!?\n])\s*/)
+    .split(/(?<=[.!?\n])\s*/)
     .map((s) => s.trim())
     .filter((s) => s.length > 0);
 
@@ -29,11 +30,13 @@ export async function semanticChunk(
     ];
   }
 
-  // 2. Generate an embedding vector for each sentence
-  console.log(`Semantic chunking: generating embeddings for ${sentences.length} sentences...`);
+  // 2. Generate embeddings for all sentences
+  console.log(
+    `Semantic chunking: generating embeddings for ${sentences.length} sentences...`,
+  );
   const embeddings = await embedBatch(sentences);
 
-  // 3. Compute similarity between adjacent sentences to find split points
+  // 3. Find breakpoints (adjacent sentences with low similarity)
   const breakpoints: number[] = [];
 
   for (let i = 0; i < sentences.length - 1; i++) {
@@ -42,13 +45,13 @@ export async function semanticChunk(
       embeddings[i + 1]?.embedding,
     );
 
-    // Similarity below threshold = semantic jump = split point
+    // Similarity below threshold = topic jump = breakpoint
     if (sim < breakpointThreshold) {
       breakpoints.push(i + 1);
     }
   }
 
-  // 4. Merge sentences into chunks at split points
+  // 4. Group sentences into chunks at breakpoints
   const chunks: TextChunk[] = [];
   let currentGroup: string[] = [];
   let chunkIndex = 0;

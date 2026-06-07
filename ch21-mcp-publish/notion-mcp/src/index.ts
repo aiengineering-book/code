@@ -26,7 +26,10 @@ for (const tool of notionTools) {
       if (message.includes('Could not find page')) {
         return {
           content: [
-            { type: 'text' as const, text: `Error: page not found or no access permission` },
+            {
+              type: 'text' as const,
+              text: `Error: page not found or no access permission`,
+            },
           ],
           isError: true,
         };
@@ -44,7 +47,9 @@ for (const tool of notionTools) {
       }
 
       return {
-        content: [{ type: 'text' as const, text: `Tool execution failed: ${message}` }],
+        content: [
+          { type: 'text' as const, text: `Tool execution failed: ${message}` },
+        ],
         isError: true,
       };
     }
@@ -71,7 +76,10 @@ server.resource(
   async (uri) => {
     const match = uri.toString().match(/^notion:\/\/page\/(.+)$/);
     if (!match) {
-      throw new McpError(ErrorCode.InvalidRequest, `Invalid Notion URI: ${uri}`);
+      throw new McpError(
+        ErrorCode.InvalidRequest,
+        `Invalid Notion URI: ${uri}`,
+      );
     }
 
     const pageId = match[1]!;

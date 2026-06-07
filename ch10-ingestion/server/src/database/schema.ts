@@ -45,10 +45,10 @@ export type DocumentChunk = typeof documentChunks.$inferSelect;
 import { pgEnum } from 'drizzle-orm/pg-core';
 
 export const documentStatusEnum = pgEnum('document_status', [
-  'pending',    // Waiting to be processed
+  'pending', // Waiting to be processed
   'processing', // Currently processing
-  'ready',      // Processing complete, searchable
-  'failed',     // Processing failed
+  'ready', // Processing complete, searchable
+  'failed', // Processing failed
 ]);
 
 export const documents = pgTable('documents', {

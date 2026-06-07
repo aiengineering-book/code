@@ -6,7 +6,7 @@ async function main() {
   const tools = [webSearchTool] as Tool[];
   const agent = new ReActAgentV2({ tools, maxConcurrency: 2, maxSteps: 20 });
   const rees = await agent.run(
-  'Look up the latest OpenAI models and tell me their context window sizes',
+    'Look up the latest OpenAI models and tell me their context window sizes',
   );
   console.log(JSON.stringify(rees));
 }

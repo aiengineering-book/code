@@ -1,5 +1,5 @@
-// #book-ref ch08-chat-store
-// ch08-conversation/web/src/stores/chat-store.ts
+// #book-ref ch08-conversation/web/src/stores/chat-store.ts
+
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -70,7 +70,6 @@ export const useChatStore = create<ChatStore>()(
         conversations: s.conversations,
         currentConversationId: s.currentConversationId,
       }),
-        // Ensure conversations is always an array
     },
   ),
 );

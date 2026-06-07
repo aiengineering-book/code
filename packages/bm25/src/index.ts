@@ -100,7 +100,7 @@ export class BM25Index {
       const df = this.df.get(term) ?? 0;
       if (df === 0) continue;
 
-    // IDF (add smoothing to avoid negative log)
+      // IDF (add smoothing to avoid negative log)
       const idf = Math.log((N - df + 0.5) / (df + 0.5) + 1);
 
       for (const doc of this.docs) {

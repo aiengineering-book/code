@@ -1,5 +1,5 @@
-// #book-ref ch08-conversation-service
-// ch08-conversation/server/src/services/conversation-service.ts
+// #book-ref ch08-conversation/server/src/services/conversation-service.ts
+
 import { and, asc, desc, eq } from 'drizzle-orm';
 import { db } from '../database/client.js';
 import type { Message } from '../database/schema.js';

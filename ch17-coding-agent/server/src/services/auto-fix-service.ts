@@ -68,7 +68,8 @@ Steps:
 
   // Parse the final result
   const fixed =
-    result.answer.includes('✅') || result.answer.toLowerCase().includes('tests pass');
+    result.answer.includes('✅') ||
+    result.answer.toLowerCase().includes('tests pass');
   const attempts = result.steps.filter(
     (s) => s.toolName === 'run_tests',
   ).length;

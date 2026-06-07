@@ -11,12 +11,12 @@ import auth from './routes/auth.js';
 import todoRouter from './routes/todos.js';
 
 const app = new Hono()
-  .use('*', logger())                              // Log every request
+  .use('*', logger()) // Log every request
   .use('/api/*', cors({ origin: env.CORS_ORIGIN })) // Allow frontend cross-origin requests
   .get('/health', (c) => c.json({ status: 'ok' })) // Health check for deployment platforms
-  .route('/api/auth', auth)                         // Auth routes (section 4.10)
-  .route('/api/todos', todoRouter)                  // Todo routes (section 4.11)
-  .onError(errorHandler);                           // Centralized error handling
+  .route('/api/auth', auth) // Auth routes (section 4.10)
+  .route('/api/todos', todoRouter) // Todo routes (section 4.11)
+  .onError(errorHandler); // Centralized error handling
 
 serve({ fetch: app.fetch, port: env.PORT }, (info) => {
   console.log(`🚀 Server running at http://localhost:${info.port}`);

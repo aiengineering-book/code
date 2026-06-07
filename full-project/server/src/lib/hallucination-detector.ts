@@ -1,5 +1,5 @@
-// #book-ref ch12-hallucination-detector
-// ch12-production-rag/server/src/lib/hallucination-detector.ts
+// #book-ref ch12-production-rag/server/src/lib/hallucination-detector.ts
+
 import { callLLM } from './llm.js';
 
 export interface HallucinationReport {
@@ -17,7 +17,9 @@ export async function detectHallucination(
     return {
       hasHallucination: true,
       confidence: 0.9,
-      unsupportedClaims: ['No reference materials — all content may be hallucinated'],
+      unsupportedClaims: [
+        'No reference materials — all content may be hallucinated',
+      ],
       supportedClaims: [],
     };
   }

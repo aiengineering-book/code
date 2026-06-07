@@ -101,7 +101,9 @@ export default function App() {
             cursor: 'pointer',
           }}
         >
-          {isRegister ? 'Already have an account? Sign in' : 'No account? Register'}
+          {isRegister
+            ? 'Already have an account? Sign in'
+            : 'No account? Register'}
         </button>
       </p>
     </div>

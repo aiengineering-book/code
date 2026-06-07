@@ -1,5 +1,5 @@
-// #book-ref ch23-injection-guard
-// ch23-production/server/src/middleware/injection-guard.ts
+// #book-ref ch23-production/server/src/middleware/injection-guard.ts
+
 import type { MiddlewareHandler } from 'hono';
 import { detectInjection } from '../lib/prompt-injection-detector.js';
 

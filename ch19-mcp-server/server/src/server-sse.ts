@@ -59,7 +59,7 @@ app.post('/mcp', async (req, res) => {
     }
   };
 
-  await server.connect(transport as any);
+  await server.connect(transport);
   await transport.handleRequest(req, res, req.body);
 });
 

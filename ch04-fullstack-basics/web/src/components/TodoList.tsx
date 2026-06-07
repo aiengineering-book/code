@@ -15,10 +15,12 @@ export function TodoList() {
   const [newTitle, setNewTitle] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const headers = { Authorization: `Bearer ${getToken()}` };
+  function authHeaders() {
+    return { Authorization: `Bearer ${getToken()}` };
+  }
 
   async function fetchTodos() {
-    const res = await api.api.todos.$get({}, { headers });
+    const res = await api.api.todos.$get({}, { headers: authHeaders() });
     if (res.ok) {
       const data = await res.json();
       setTodos(data as Todo[]);
@@ -32,7 +34,7 @@ export function TodoList() {
 
     const res = await api.api.todos.$post(
       { json: { title: newTitle } },
-      { headers },
+      { headers: authHeaders() },
     );
 
     if (res.ok) {
@@ -45,7 +47,7 @@ export function TodoList() {
   async function toggleTodo(id: string, completed: boolean) {
     const res = await api.api.todos[':id'].$patch(
       { param: { id }, json: { completed: !completed } },
-      { headers },
+      { headers: authHeaders() },
     );
 
     if (res.ok) {
@@ -56,13 +58,15 @@ export function TodoList() {
   }
 
   async function deleteTodo(id: string) {
-    await api.api.todos[':id'].$delete({ param: { id } }, { headers });
-    setTodos((prev) => prev.filter((t) => t.id !== id));
+    const res = await api.api.todos[':id'].$delete({ param: { id } }, { headers: authHeaders() });
+    if (res.ok) {
+      setTodos((prev) => prev.filter((t) => t.id !== id));
+    }
   }
 
   useEffect(() => {
     fetchTodos();
-  }, [fetchTodos]);
+  }, []);
 
   if (loading) return <div>Loading...</div>;
 

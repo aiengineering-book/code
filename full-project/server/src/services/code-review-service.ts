@@ -1,5 +1,4 @@
-// #book-ref ch17-code-review-service
-// ch17-coding-agent/server/src/services/code-review-service.ts
+// #book-ref ch17-coding-agent/server/src/services/code-review-service.ts
 
 import { z } from 'zod';
 import { ReActAgent } from '../lib/agent/react-agent.js';
@@ -19,7 +18,12 @@ import { structuredOutputWithFeedback } from '../lib/structured-output.js';
 // Structured schema for the review report
 const CodeReviewSchema = z.object({
   summary: z.string().describe('One-sentence summary of the code change'),
-  overallScore: z.number().int().min(1).max(10).describe('Overall code quality score'),
+  overallScore: z
+    .number()
+    .int()
+    .min(1)
+    .max(10)
+    .describe('Overall code quality score'),
   issues: z
     .array(
       z.object({
@@ -103,7 +107,9 @@ export class CodeReviewService {
 
     // Build task description
     const focusText =
-      focusAreas.length > 0 ? `\nFocus especially on: ${focusAreas.join(', ')}` : '';
+      focusAreas.length > 0
+        ? `\nFocus especially on: ${focusAreas.join(', ')}`
+        : '';
 
     const task = `
 Perform a comprehensive review of the following code change:

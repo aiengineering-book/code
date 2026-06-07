@@ -1,5 +1,5 @@
-// #book-ref ch16-orchestrator
-// ch16-multi-agent/server/src/lib/agent/multi/orchestrator.ts
+// #book-ref ch16-multi-agent/server/src/lib/agent/multi/orchestrator.ts
+
 import { callLLM } from '../../llm.js';
 import { ReActAgent, type Tool } from '../react-agent.js';
 import { getToolsForRole } from '../tools/index.js';
@@ -38,7 +38,10 @@ export class Orchestrator {
    * Phase 1: Decompose the task
    */
   async decompose(goal: string): Promise<OrchestratorPlan> {
-    this.emit({ type: 'planning', message: 'Analyzing goal and forming a plan...' });
+    this.emit({
+      type: 'planning',
+      message: 'Analyzing goal and forming a plan...',
+    });
 
     const { text } = await callLLM(
       [
@@ -140,10 +143,9 @@ Output JSON only.`,
     maxConcurrency: number,
   ): Promise<Map<string, SubTaskResult>> {
     const results = new Map<string, SubTaskResult>();
-    const queue = [...tasks];
     const active: Promise<void>[] = [];
 
-    const runTask = async (task: SubTask) => {
+    const runTask = async (task: SubTask): Promise<void> => {
       this.emit({
         type: 'task_start',
         message: `Starting: ${task.title}`,
@@ -159,32 +161,24 @@ Output JSON only.`,
       });
     };
 
-    // Concurrency control
-    for (const task of queue) {
-      const promise = runTask(task).catch((err) => {
-        results.set(task.id, {
-          taskId: task.id,
-          status: 'failed',
-          output: `Execution error: ${err instanceof Error ? err.message : String(err)}`,
-          durationMs: 0,
+    // Concurrency control: each promise removes itself from active when done
+    for (const task of tasks) {
+      const promise: Promise<void> = runTask(task)
+        .catch((err) => {
+          results.set(task.id, {
+            taskId: task.id,
+            status: 'failed',
+            output: `Execution error: ${err instanceof Error ? err.message : String(err)}`,
+            durationMs: 0,
+          });
+        })
+        .finally(() => {
+          active.splice(active.indexOf(promise), 1);
         });
-      });
       active.push(promise);
 
       if (active.length >= maxConcurrency) {
-        // Wait for the fastest to finish, then remove it from active
         await Promise.race(active);
-        // Promise.race doesn't tell us which one finished, but an already-settled Promise
-        // resolves immediately on re-await — use Promise.race + filter to clean up
-        const settled = await Promise.race(
-          active.map((p, i) =>
-            p.then(
-              () => i,
-              () => i,
-            ),
-          ),
-        );
-        active.splice(settled, 1);
       }
     }
 

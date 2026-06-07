@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/agent-logger.ts
+// ch13-agent/server/src/lib/agent/agent-logger.ts
 // #book ch13-agent-logger
 // ch13-agent/server/src/lib/agent/agent-logger.ts
 import type { AgentStep } from './react-agent.js';
@@ -46,9 +46,7 @@ export class AgentLogger {
     run.endTime = new Date();
     run.finalAnswer = result.answer;
     run.success = result.success;
-    if (result.error !== undefined) {
-      run.errorMessage = result.error;
-    }
+    run.errorMessage = result.error;
 
     // Persist to database (async)
     this.persistRun(run).catch(console.error);

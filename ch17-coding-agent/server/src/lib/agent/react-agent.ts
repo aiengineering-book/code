@@ -225,7 +225,7 @@ ${toolDescriptions}
       return { answer: fallbackAnswer, output: fallbackAnswer, steps };
     }
 
-      // Max steps reached
+    // Max steps reached
     const timeoutAnswer =
       'Max step limit reached. Here is the progress so far:\n\n' +
       steps

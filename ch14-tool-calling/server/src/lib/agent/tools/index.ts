@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/tools/index.ts
+// ch14-tool-calling/server/src/lib/agent/tools/index.ts
 // #book ch14-tools-index
 // ch14-tool-calling/server/src/lib/agent/tools/index.ts
 import type { Tool } from '../react-agent.js';

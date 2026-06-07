@@ -42,7 +42,9 @@ export function useAuth() {
 
         if (!res.ok) {
           const data = await res.json();
-          throw new Error((data as any).error?.message ?? 'Registration failed');
+          throw new Error(
+            (data as any).error?.message ?? 'Registration failed',
+          );
         }
 
         const { token } = await res.json();

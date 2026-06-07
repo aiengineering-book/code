@@ -4,30 +4,30 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { ResourceTemplate } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { ErrorCode, McpError } from '@modelcontextprotocol/sdk/types.js';
 
-// Static resource definitions
-const _STATIC_RESOURCES = [
-  {
-    uri: 'knowledge-base://documents/list',
-    name: 'Knowledge base document index',
-    description: 'List of all processed documents in the knowledge base',
-    mimeType: 'application/json',
-  },
-  {
+// Static resource metadata — single source of truth for URI, name, description, mimeType
+const STATIC_RESOURCES = {
+  stats: {
     uri: 'knowledge-base://stats',
     name: 'Knowledge base statistics',
     description: 'Document count, vector chunk count, last updated time, etc.',
     mimeType: 'application/json',
   },
-];
+  documentList: {
+    uri: 'knowledge-base://documents/list',
+    name: 'Knowledge base document index',
+    description: 'List of all processed documents in the knowledge base',
+    mimeType: 'application/json',
+  },
+} as const;
 
 export function registerResourceHandlers(server: McpServer) {
   // Static resource: knowledge base statistics
   server.resource(
     'knowledge-base-stats',
-    'knowledge-base://stats',
+    STATIC_RESOURCES.stats.uri,
     {
-      description: 'Document count, vector chunk count, last updated time, etc.',
-      mimeType: 'application/json',
+      description: STATIC_RESOURCES.stats.description,
+      mimeType: STATIC_RESOURCES.stats.mimeType,
     },
     async (uri) => {
       const stats = await fetchStats();
@@ -46,10 +46,10 @@ export function registerResourceHandlers(server: McpServer) {
   // Static resource: document list
   server.resource(
     'knowledge-base-documents-list',
-    'knowledge-base://documents/list',
+    STATIC_RESOURCES.documentList.uri,
     {
-      description: 'List of all processed documents in the knowledge base',
-      mimeType: 'application/json',
+      description: STATIC_RESOURCES.documentList.description,
+      mimeType: STATIC_RESOURCES.documentList.mimeType,
     },
     async (uri) => {
       const response = await fetch('http://localhost:3000/api/documents');
@@ -95,7 +95,10 @@ export function registerResourceHandlers(server: McpServer) {
         };
       },
     }),
-    { description: 'Full content of a single document in the knowledge base', mimeType: 'text/plain' },
+    {
+      description: 'Full content of a single document in the knowledge base',
+      mimeType: 'text/plain',
+    },
     async (uri, { documentId }) => {
       const content = await fetchDocumentContent(documentId as string);
       return {
@@ -134,7 +137,10 @@ async function fetchDocumentContent(documentId: string): Promise<string> {
   );
 
   if (!response.ok) {
-    throw new McpError(ErrorCode.InvalidRequest, `Document not found: ${documentId}`);
+    throw new McpError(
+      ErrorCode.InvalidRequest,
+      `Document not found: ${documentId}`,
+    );
   }
 
   return response.text();

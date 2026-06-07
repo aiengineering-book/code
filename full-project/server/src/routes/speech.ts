@@ -1,5 +1,5 @@
-// #book-ref ch22-speech-route
-// ch22-multimodal/server/src/routes/speech.ts
+// #book-ref ch22-multimodal/server/src/routes/speech.ts
+
 import { Hono } from 'hono';
 import { streamSSE } from 'hono/streaming';
 import { ValidationError } from '../errors.js';

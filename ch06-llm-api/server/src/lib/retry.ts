@@ -3,10 +3,10 @@
 import OpenAI from 'openai';
 
 export interface RetryOptions {
-  maxAttempts?: number;      // Max attempts including the first
-  initialDelay?: number;     // Milliseconds to wait before the first retry
-  maxDelay?: number;         // Upper bound on wait time
-  backoffMultiplier?: number; // Multiplier per retry (typically 2)
+  maxAttempts?: number; // Max attempts (including the first)
+  initialDelay?: number; // Milliseconds to wait before the first retry
+  maxDelay?: number; // Upper bound on wait time
+  backoffMultiplier?: number; // Backoff multiplier (usually 2)
 }
 
 function isRetryable(error: unknown): boolean {
@@ -19,8 +19,11 @@ function isRetryable(error: unknown): boolean {
 
 function getRetryAfterMs(error: unknown): number | null {
   if (error instanceof OpenAI.RateLimitError) {
-    const retryAfter = error.headers?.get('retry-after');
-    if (retryAfter) return Number(retryAfter) * 1000;
+    const headers = error.headers;
+    if (headers) {
+      const retryAfter = headers.get('retry-after');
+      if (retryAfter) return Number(retryAfter) * 1000;
+    }
   }
   return null;
 }
@@ -45,20 +48,20 @@ export async function withRetry<T>(
       const isLast = attempt === maxAttempts;
       if (isLast || !isRetryable(error)) throw error;
 
-      // Use the server's suggested wait time if available
+      // Prefer the wait time provided by the server
       const waitMs = getRetryAfterMs(error) ?? Math.min(delay, maxDelay);
 
       console.warn(
-        `[withRetry] Attempt ${attempt} failed, retrying in ${waitMs}ms:`,
+        `[withRetry] attempt ${attempt} failed, retrying in ${waitMs}ms:`,
         error instanceof Error ? error.message : error,
       );
 
       await new Promise((r) => setTimeout(r, waitMs));
-      delay = Math.min(delay * backoffMultiplier, maxDelay);
+      delay = Math.min(delay * backoffMultiplier, maxDelay); // wait longer next time
     }
   }
 
-  // TypeScript requires this line — unreachable in practice
+  // TypeScript requires this line; it is never actually reached
   throw new Error('unreachable');
 }
 // #endbook

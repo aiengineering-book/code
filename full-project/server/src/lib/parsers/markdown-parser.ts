@@ -1,4 +1,5 @@
-// #book-ref ch12-production-rag/server/src/lib/parsers/markdown-parser.ts
+// #book-ref ch11-rag/server/src/lib/parsers/markdown-parser.ts
+
 import type { DocumentParser, ParsedDocument } from './types.js';
 
 export const markdownParser: DocumentParser = {

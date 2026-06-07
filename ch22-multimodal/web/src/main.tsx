@@ -1,7 +1,8 @@
-// #book-ref ch17-coding-agent/web/src/main.tsx
+// #book-ref ch10-ingestion/web/src/main.tsx
+
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { App } from './App.js';
+import App from './App.js';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

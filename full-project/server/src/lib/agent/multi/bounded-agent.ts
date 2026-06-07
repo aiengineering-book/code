@@ -1,5 +1,5 @@
-// #book-ref ch16-bounded-agent
-// ch16-multi-agent/server/src/lib/agent/multi/bounded-agent.ts
+// #book-ref ch16-multi-agent/server/src/lib/agent/multi/bounded-agent.ts
+
 import type { AgentStep, ReActAgent } from '../react-agent.js';
 
 interface BoundedAgentOptions {
@@ -39,7 +39,7 @@ export class BoundedSubagent {
       },
     });
 
-    return result.output;
+    return result.answer;
   }
 
   getStats() {

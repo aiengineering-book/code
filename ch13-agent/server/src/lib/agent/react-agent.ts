@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/react-agent.ts
+// ch13-agent/server/src/lib/agent/react-agent.ts
 // #book ch13-react-agent
 // ch13-agent/server/src/lib/agent/react-agent.ts
 import { DEFAULT_MODEL, openai } from '../openai.js';
@@ -19,8 +19,8 @@ export interface AgentStep {
 }
 
 export interface AgentOptions {
-  maxSteps?: number;  // Maximum steps before forced termination
-  verbose?: boolean;  // Whether to print per-step logs
+  maxSteps?: number; // Maximum steps before forced termination
+  verbose?: boolean; // Whether to print per-step logs
   onStep?: (step: AgentStep) => void; // Step callback (for streaming display)
 }
 
@@ -224,7 +224,8 @@ Final answer content
       const fallbackAnswer = assistantText.trim();
       const fallbackStep: AgentStep = {
         type: 'final_answer',
-        content: fallbackAnswer || 'Task complete, but no explicit answer was given.',
+        content:
+          fallbackAnswer || 'Task complete, but no explicit answer was given.',
       };
       steps.push(fallbackStep);
       onStep?.(fallbackStep);

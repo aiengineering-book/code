@@ -1,5 +1,5 @@
-// #book-ref ch22-vision-route
-// ch22-multimodal/server/src/routes/vision.ts
+// #book-ref ch22-multimodal/server/src/routes/vision.ts
+
 import { type ErrorHandler, Hono } from 'hono';
 import { ValidationError } from '../errors.js';
 import { authMiddleware } from '../middleware/auth.js';
@@ -35,7 +35,9 @@ const visionRouter = new Hono()
     if (image.size > MAX_IMAGE_SIZE)
       throw new ValidationError('Image must not exceed 5MB');
     if (!ALLOWED_TYPES.includes(image.type)) {
-      throw new ValidationError('Only PNG, JPEG, GIF, and WebP formats are supported');
+      throw new ValidationError(
+        'Only PNG, JPEG, GIF, and WebP formats are supported',
+      );
     }
 
     const buffer = await image.arrayBuffer();
@@ -60,7 +62,8 @@ const visionRouter = new Hono()
         default: {
           const { analyzeImage } = await import('../lib/vision.js');
           const prompt =
-            (formData.get('prompt') as string) ?? 'Please describe the content of this image';
+            (formData.get('prompt') as string) ??
+            'Please describe the content of this image';
           result = await analyzeImage(
             { base64, mediaType: 'image/jpeg' },
             prompt,

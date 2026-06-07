@@ -1,4 +1,3 @@
-// #book-ref ch10-ingestion/server/src/env.ts
 import 'dotenv/config';
 
 function required(key: string): string {

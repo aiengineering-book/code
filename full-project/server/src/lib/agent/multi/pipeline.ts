@@ -1,5 +1,5 @@
-// #book-ref ch16-pipeline
-// ch16-multi-agent/server/src/lib/agent/multi/pipeline.ts
+// #book-ref ch16-multi-agent/server/src/lib/agent/multi/pipeline.ts
+
 import { ReActAgent, type Tool } from '../react-agent.js';
 
 export interface PipelineStage {
@@ -87,7 +87,7 @@ export class AgentPipeline {
     return {
       finalOutput: currentOutput,
       stageResults,
-      success: true,
+      success: stageResults.every((s) => s.retries <= this.maxRetries),
     };
   }
 }

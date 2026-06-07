@@ -1,5 +1,4 @@
-// #book-ref ch20-mcp-route
-// ch20-mcp-client/server/src/routes/mcp.ts
+// #book-ref ch20-mcp-client/server/src/routes/mcp.ts
 
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
@@ -109,7 +108,8 @@ const mcpRouter = new Hono()
           await stream.writeSSE({
             event: 'error',
             data: JSON.stringify({
-              message: error instanceof Error ? error.message : 'Execution failed',
+              message:
+                error instanceof Error ? error.message : 'Execution failed',
             }),
           });
         }

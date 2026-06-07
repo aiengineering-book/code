@@ -1,3 +1,5 @@
+// #book-ref ch16-multi-agent/server/src/lib/agent/tools/index.ts
+
 // Stub: ch16 only needs the getToolsForRole type signature; full tool definitions in ch14/ch15
 import type { Tool } from '../react-agent.js';
 

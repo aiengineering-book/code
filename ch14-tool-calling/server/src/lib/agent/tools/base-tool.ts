@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/tools/base-tool.ts
+// ch14-tool-calling/server/src/lib/agent/tools/base-tool.ts
 // #book ch14-base-tool
 // ch14-tool-calling/server/src/lib/agent/tools/base-tool.ts
 import type { z } from 'zod';
@@ -61,7 +61,10 @@ export abstract class ValidatedTool<TInput, TOutput> implements Tool {
     // 3. Validate output
     const outputResult = this.outputSchema.safeParse(rawOutput);
     if (!outputResult.success) {
-      console.error(`[${this.name}] Output validation failed:`, outputResult.error);
+      console.error(
+        `[${this.name}] Output validation failed:`,
+        outputResult.error,
+      );
       // Output validation failure usually indicates a bug — log but return anyway
       return JSON.stringify({ success: true, data: rawOutput });
     }

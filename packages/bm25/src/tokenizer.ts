@@ -128,7 +128,7 @@ function tokenizeEn(text: string): string[] {
  */
 function tokenizeZh(text: string): string[] {
   const tokens: string[] = [];
-    // Consecutive Chinese character block
+  // Consecutive Chinese character block
   const blocks =
     text.match(/[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]+/g) ?? [];
   for (const block of blocks) {

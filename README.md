@@ -77,11 +77,11 @@ pnpm dev
 |---|---|---|---|
 | Ch 1  | `ch01-hello-ai/` | — | Minimal LLM call, single file |
 | Ch 2  | `ch02-dev-env/` | — | Monorepo scaffold, TypeScript config |
-| Ch 3  | — | — | Theory chapter, no standalone code |
+| Ch 3  | `ch03-server-patterns/` | — | Server patterns reference; not independently runnable |
 | Ch 4  | `ch04-fullstack-basics/` | ✅ PostgreSQL | CRUD API, Drizzle ORM, JWT auth |
 | Ch 5  | — | — | Theory chapter, no standalone code |
 | Ch 6  | `ch06-llm-api/` | ✅ PostgreSQL | OpenAI SDK, streaming, cost tracking |
-| Ch 7  | — | — | Prompt techniques; code samples in ch06 |
+| Ch 7  | `ch07-prompt-engineering/` | — | Prompt engineering reference; not independently runnable |
 | Ch 8  | `ch08-conversation/` | ✅ PostgreSQL | Multi-turn conversation, context compression, SSE |
 | Ch 9  | `ch09-embedding/` | ✅ pgvector | Vector embeddings, similarity search |
 | Ch 10 | `ch10-ingestion/` | ✅ pgvector | Document ingestion, chunking strategies |

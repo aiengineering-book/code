@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/react-agent.ts
+// ch14-tool-calling/server/src/lib/agent/react-agent.ts
 // Chapter 13: ReAct Agent (text-parsing version)
 // Chapter 14 upgrade uses Function Calling; see react-agent-v2.ts
 
@@ -201,7 +201,7 @@ ${toolDescriptions}
       const fallbackAnswer = assistantText.trim();
       const fallbackStep: AgentStep = {
         type: 'final_answer',
-      content: fallbackAnswer || 'Task complete, but no explicit answer.',
+        content: fallbackAnswer || 'Task complete, but no explicit answer.',
       };
       steps.push(fallbackStep);
       onStep?.(fallbackStep);

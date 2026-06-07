@@ -1,4 +1,5 @@
-// #book-ref ch20-mcp-client/web/vite.config.ts
+// #book-ref ch10-ingestion/web/vite.config.ts
+
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 

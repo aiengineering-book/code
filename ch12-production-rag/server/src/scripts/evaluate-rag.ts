@@ -29,10 +29,18 @@ async function main() {
     results.push({ question: tc.question, scores });
 
     console.log(`Question: ${tc.question}`);
-    console.log(`  Faithfulness:       ${(scores.faithfulness * 100).toFixed(1)}%`);
-    console.log(`  Answer relevancy:   ${(scores.answerRelevancy * 100).toFixed(1)}%`);
-    console.log(`  Context precision:  ${(scores.contextPrecision * 100).toFixed(1)}%`);
-    console.log(`  Overall:            ${(scores.overall * 100).toFixed(1)}%\n`);
+    console.log(
+      `  Faithfulness:       ${(scores.faithfulness * 100).toFixed(1)}%`,
+    );
+    console.log(
+      `  Answer relevancy:   ${(scores.answerRelevancy * 100).toFixed(1)}%`,
+    );
+    console.log(
+      `  Context precision:  ${(scores.contextPrecision * 100).toFixed(1)}%`,
+    );
+    console.log(
+      `  Overall:            ${(scores.overall * 100).toFixed(1)}%\n`,
+    );
   }
 
   const avg =

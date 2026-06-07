@@ -1,5 +1,4 @@
-// #book-ref ch22-speech-to-text
-// ch22-multimodal/server/src/lib/speech-to-text.ts
+// #book-ref ch22-multimodal/server/src/lib/speech-to-text.ts
 
 import path from 'node:path';
 import OpenAI from 'openai';
@@ -105,7 +104,8 @@ export async function* transcribeStream(
   audioChunks: AsyncIterable<Buffer>,
   options: { language?: string; prompt?: string } = {},
 ): AsyncGenerator<string> {
-  const _CHUNK_DURATION_MS = 30_000;
+  // Chunking is size-based (1MB), not time-based.
+  // For time-based chunking, the frontend should send chunks at fixed intervals.
   const CHUNK_SIZE = 1024 * 1024; // 1MB per chunk
 
   let buffer = Buffer.alloc(0);

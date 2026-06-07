@@ -1,5 +1,5 @@
-// #book-ref ch04-jwt-utils
-// ch04-fullstack-basics/server/src/utils/jwt.ts
+// #book-ref ch04-fullstack-basics/server/src/utils/jwt.ts
+
 import jwt from 'jsonwebtoken';
 import { env } from '../env.js';
 import { UnauthorizedError } from '../errors.js';

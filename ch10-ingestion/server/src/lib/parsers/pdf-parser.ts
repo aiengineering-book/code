@@ -11,9 +11,9 @@ export const pdfParser: DocumentParser = {
 
     // Clean up the extracted text
     const cleanedText = data.text
-      .replace(/\n{3,}/g, '\n\n')         // Collapse multiple newlines to two
-      .replace(/[ \t]+/g, ' ')             // Collapse multiple spaces to one
-      .replace(/^\s+|\s+$/gm, '')          // Strip leading/trailing whitespace per line
+      .replace(/\n{3,}/g, '\n\n') // Collapse multiple newlines to two
+      .replace(/[ \t]+/g, ' ') // Collapse multiple spaces to one
+      .replace(/^\s+|\s+$/gm, '') // Strip leading/trailing whitespace per line
       .trim();
 
     return {

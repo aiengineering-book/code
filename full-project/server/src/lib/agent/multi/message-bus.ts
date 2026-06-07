@@ -1,5 +1,4 @@
-// #book-ref ch16-message-bus
-// ch16-multi-agent/server/src/lib/agent/multi/message-bus.ts
+// #book-ref ch16-multi-agent/server/src/lib/agent/multi/message-bus.ts
 
 export interface AgentMessage {
   id: string;

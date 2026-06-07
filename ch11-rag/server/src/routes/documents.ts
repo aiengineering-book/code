@@ -1,4 +1,5 @@
 // #book-ref ch10-ingestion/server/src/routes/documents.ts
+
 import { and, eq } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { db } from '../database/client.js';
@@ -47,17 +48,21 @@ const documentsRouter = new Hono<Env>()
       })
       .returning();
 
+    if (!document) throw new Error('Failed to create document record');
+
     // 2. Process asynchronously — don't await, respond immediately
     const buffer = Buffer.from(await file.arrayBuffer());
 
     // Process in the background without blocking the response
     ingestionService
-      .ingest(document?.id, buffer, file.name, file.type)
-      .catch((err) => console.error(`Document ${document?.id} processing failed:`, err));
+      .ingest(document.id, buffer, file.name, file.type)
+      .catch((err) =>
+        console.error(`Document ${document.id} processing failed:`, err),
+      );
 
     return c.json(
       {
-        documentId: document?.id,
+        documentId: document.id,
         message: 'File uploaded — processing in the background',
       },
       202,

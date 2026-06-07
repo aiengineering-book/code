@@ -129,7 +129,8 @@ export function setupRAGPromptExperiment() {
   registerExperiment({
     id: 'rag-prompt-v2',
     name: 'RAG System Prompt Optimization',
-    description: 'Test whether stricter citation requirements improve faithfulness',
+    description:
+      'Test whether stricter citation requirements improve faithfulness',
     status: 'active',
     startedAt: new Date(),
     variants: [
@@ -138,7 +139,8 @@ export function setupRAGPromptExperiment() {
         name: 'Current version',
         weight: 0.5,
         config: {
-          systemPrompt: 'Answer only based on the provided references, annotating [Source N].',
+          systemPrompt:
+            'Answer only based on the provided references, annotating [Source N].',
         },
       },
       {

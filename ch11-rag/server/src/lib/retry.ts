@@ -1,4 +1,5 @@
-// #book-ref ch10-ingestion/server/src/lib/retry.ts
+// #book-ref ch06-llm-api/server/src/lib/retry.ts
+
 import OpenAI from 'openai';
 
 export interface RetryOptions {

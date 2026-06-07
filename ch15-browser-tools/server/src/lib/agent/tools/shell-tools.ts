@@ -160,7 +160,8 @@ export const runNodeCodeTool: Tool = {
   execute: async (input) => {
     const { code } = input as { code: string };
 
-    // Block access to file system and network
+    // Block access to file system and network using word-boundary checks
+    // to avoid false positives on variable names like require_id or fetchData
     const forbidden = [
       'require',
       'import',
@@ -170,7 +171,7 @@ export const runNodeCodeTool: Tool = {
       'process',
     ];
     for (const word of forbidden) {
-      if (code.includes(word)) {
+      if (new RegExp(`\\b${word}\\b`).test(code)) {
         return `Error: "${word}" is not allowed in code execution`;
       }
     }
@@ -216,6 +217,5 @@ export const runNodeCodeTool: Tool = {
       return `Execution error: ${error instanceof Error ? error.message : String(error)}`;
     }
   },
-};
 };
 // #endbook

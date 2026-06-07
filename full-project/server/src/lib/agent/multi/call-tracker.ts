@@ -1,5 +1,4 @@
-// #book-ref ch16-call-tracker
-// ch16-multi-agent/server/src/lib/agent/multi/call-tracker.ts
+// #book-ref ch16-multi-agent/server/src/lib/agent/multi/call-tracker.ts
 
 export class AgentCallTracker {
   // callStack records the current call chain as a list of agentIds

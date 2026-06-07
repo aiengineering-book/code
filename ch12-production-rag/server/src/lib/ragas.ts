@@ -84,7 +84,7 @@ async function evaluateContextPrecision(
   if (contexts.length === 0) return 0;
 
   const results = await Promise.all(
-    contexts.map(async (ctx) => {
+    contexts.slice(0, 5).map(async (ctx) => {
       const { text } = await callLLM(
         [
           {

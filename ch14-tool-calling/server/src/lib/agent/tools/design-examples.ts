@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/tools/design-examples.ts
+// ch14-tool-calling/server/src/lib/agent/tools/design-examples.ts
 // #book ch14-design-examples
 // ch14-tool-calling/server/src/lib/agent/tools/design-examples.ts
 
@@ -87,7 +87,7 @@ Returns JSON: { city, temperature (Celsius or Fahrenheit), humidity (%), conditi
 // If you have many tools, group them by scenario and inject only the relevant set.
 // #endbook
 
-  // For illustration only; prevents TypeScript "unused variable" errors
+// For illustration only; prevents TypeScript "unused variable" errors
 void [
   searchTool,
   badEmailPriority,

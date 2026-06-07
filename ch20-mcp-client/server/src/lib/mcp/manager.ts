@@ -27,7 +27,9 @@ export class MCPManager {
    */
   async addServer(config: MCPServerConfig): Promise<void> {
     if (this.clients.has(config.name)) {
-      console.warn(`[MCP Manager] Server "${config.name}" already exists, skipping`);
+      console.warn(
+        `[MCP Manager] Server "${config.name}" already exists, skipping`,
+      );
       return;
     }
 

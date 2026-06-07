@@ -129,7 +129,11 @@ export class RAGService {
     });
 
     if (retrieved.length === 0) {
-      yield { type: 'delta', text: 'Sorry, no relevant content was found in the knowledge base.' };
+      yield { type: 'citations', citations: [] };
+      yield {
+        type: 'delta',
+        text: 'Sorry, no relevant content was found in the knowledge base.',
+      };
       yield { type: 'done' };
       return;
     }

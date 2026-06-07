@@ -37,7 +37,9 @@ export async function retrieveWithMeta(
 // System prompt instructs the LLM to cite sources explicitly and flag conflicts
 export function buildRagPromptWithSources(chunks: ChunkWithMeta[]): string {
   const contextBlocks = chunks
-    .map((c, i) => `[Source ${i + 1}] Document "${c.documentTitle}"\n${c.content}`)
+    .map(
+      (c, i) => `[Source ${i + 1}] Document "${c.documentTitle}"\n${c.content}`,
+    )
     .join('\n\n---\n\n');
 
   return `You are a knowledge base Q&A assistant. Answer the question based on the following retrieval results.

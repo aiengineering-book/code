@@ -1,5 +1,4 @@
-// #book-ref ch22-vision
-// ch22-multimodal/server/src/lib/vision.ts
+// #book-ref ch22-multimodal/server/src/lib/vision.ts
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -49,7 +48,8 @@ export async function imageFromUrl(url: string): Promise<{
   mediaType: ImageMediaType;
 }> {
   const response = await fetch(url);
-  if (!response.ok) throw new Error(`Image download failed: ${response.status}`);
+  if (!response.ok)
+    throw new Error(`Image download failed: ${response.status}`);
 
   const contentType = response.headers.get('content-type') ?? 'image/jpeg';
   const mediaType =

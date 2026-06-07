@@ -1,7 +1,7 @@
 {
   "name": "tsaibook-code",
   "private": true,
-  "description": "《用TypeScript全栈开发AI智能体》配套代码",
+  "description": "Source code for book <From Frontend to AI Engineering: Building Full-Stack AI Agents with TypeScript>",
   "scripts": {
     "build": "pnpm -r build",
     "test": "pnpm -r test",

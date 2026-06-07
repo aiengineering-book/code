@@ -42,9 +42,9 @@ describe('BM25Index', () => {
   });
 
   it('exact match ranks first', () => {
-    index.add('doc1', 'TypeScript 全栈开发指南');
-    index.add('doc2', 'Python 机器学习入门');
-    index.add('doc3', 'TypeScript 类型系统深入解析');
+    index.add('doc1', 'TypeScript full-stack development guide');
+    index.add('doc2', 'Python machine learning introduction');
+    index.add('doc3', 'TypeScript type system deep dive');
 
     const results = index.search('TypeScript');
     expect(results[0]?.id).toMatch(/doc[13]/); // doc1 or doc3
@@ -53,12 +53,12 @@ describe('BM25Index', () => {
 
   it('no matching term returns empty array', () => {
     index.add('doc1', 'hello world');
-    expect(index.search('量子计算')).toEqual([]);
+    expect(index.search('quantum computing')).toEqual([]);
   });
 
   it('limit parameter is respected', () => {
     for (let i = 0; i < 20; i++) {
-      index.add(`doc${i}`, `TypeScript 开发 示例 ${i}`);
+      index.add(`doc${i}`, `TypeScript development example ${i}`);
     }
     const results = index.search('TypeScript', 5);
     expect(results).toHaveLength(5);
@@ -106,8 +106,8 @@ describe('BM25Index', () => {
   });
 
   it('stats() returns correct metadata', () => {
-    index.add('doc1', 'TypeScript 开发');
-    index.add('doc2', 'Python 机器学习');
+    index.add('doc1', 'TypeScript development');
+    index.add('doc2', 'Python machine learning');
     const { size, terms } = index.stats;
     expect(size).toBe(2);
     expect(terms).toBeGreaterThan(0);
@@ -129,11 +129,11 @@ describe('BM25Index', () => {
   });
 
   it('results are sorted by score descending', () => {
-    index.add('doc1', 'AI Agent 工具调用工具'); // "工具" appears 2 times
-    index.add('doc2', 'AI Agent 架构');
-    index.add('doc3', 'AI 工具链');
+    index.add('doc1', 'AI agent tool calling tools'); // "tool" appears 2 times
+    index.add('doc2', 'AI agent architecture');
+    index.add('doc3', 'AI toolchain');
 
-    const results = index.search('工具');
+    const results = index.search('tool');
     for (let i = 1; i < results.length; i++) {
       expect(results[i - 1]?.score).toBeGreaterThanOrEqual(results[i]?.score);
     }

@@ -1,6 +1,7 @@
 // #book-ref ch10-ingestion/server/src/lib/parsers/types.ts
+
 export interface ParsedDocument {
-  // Extracted plain-text content
+  // Extracted plain text content
   text: string;
   // Document metadata
   metadata: {
@@ -14,7 +15,7 @@ export interface ParsedDocument {
 }
 
 export interface DocumentParser {
-  // Supported MIME types
+  // MIME types this parser handles
   supportedTypes: string[];
   // Parse the document
   parse(buffer: Buffer, filename: string): Promise<ParsedDocument>;

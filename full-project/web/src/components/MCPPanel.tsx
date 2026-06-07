@@ -1,5 +1,5 @@
-// #book-ref ch20-mcp-panel
-// ch20-mcp-client/web/src/components/MCPPanel.tsx
+// #book-ref ch20-mcp-client/web/src/components/MCPPanel.tsx
+
 import { useEffect, useState } from 'react';
 import { getToken } from '../lib/api.js';
 
@@ -62,6 +62,7 @@ export function MCPPanel() {
     const reader = res.body.getReader();
     const decoder = new TextDecoder();
     let buffer = '';
+    let currentEvent = ''; // Maintained outside the while loop to survive chunk boundaries
 
     while (true) {
       const { done, value } = await reader.read();
@@ -70,14 +71,13 @@ export function MCPPanel() {
       buffer += decoder.decode(value, { stream: true });
       const lines = buffer.split('\n');
       buffer = lines.pop() ?? '';
-      let currentEvent = ''; // Track the current event type
       for (const line of lines) {
         if (line.startsWith('event: ')) {
           currentEvent = line.slice('event: '.length).trim();
           continue;
         }
         if (!line.startsWith('data: ')) {
-          if (line === '') currentEvent = ''; // Empty line ends an event, reset
+          if (line === '') currentEvent = ''; // Empty line ends an SSE event block
           continue;
         }
 
@@ -259,8 +259,8 @@ export function MCPPanel() {
         <div
           style={{
             padding: 16,
-            background: '#dea891',
-            border: '1px solid #bbf7d0',
+            background: '#fff1f2',
+            border: '1px solid #fca5a5',
             borderRadius: 8,
             fontSize: 14,
             lineHeight: 1.7,

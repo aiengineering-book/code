@@ -1,5 +1,4 @@
-// #book-ref ch16-abort-manager
-// ch16-multi-agent/server/src/lib/agent/multi/abort-manager.ts
+// #book-ref ch16-multi-agent/server/src/lib/agent/multi/abort-manager.ts
 
 export class AgentAbortManager {
   private controllers = new Map<string, AbortController>();

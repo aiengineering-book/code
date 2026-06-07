@@ -12,7 +12,7 @@ export const authMiddleware: MiddlewareHandler = async (c, next) => {
   }
 
   const token = authorization.slice(7); // Strip "Bearer " prefix
-  const payload = verifyToken(token);   // Throws UnauthorizedError if invalid
+  const payload = verifyToken(token); // Throws UnauthorizedError if invalid
 
   // Store user info in request context; routes retrieve it with c.get('userId')
   c.set('userId', payload.userId);

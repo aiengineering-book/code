@@ -1,5 +1,5 @@
-// #book-ref ch20-mcp-manager
-// ch20-mcp-client/server/src/lib/mcp/manager.ts
+// #book-ref ch20-mcp-client/server/src/lib/mcp/manager.ts
+
 import { MCPClient, type MCPServerConfig } from './client.js';
 
 export interface ManagedTool {
@@ -27,7 +27,9 @@ export class MCPManager {
    */
   async addServer(config: MCPServerConfig): Promise<void> {
     if (this.clients.has(config.name)) {
-      console.warn(`[MCP Manager] Server "${config.name}" already exists, skipping`);
+      console.warn(
+        `[MCP Manager] Server "${config.name}" already exists, skipping`,
+      );
       return;
     }
 

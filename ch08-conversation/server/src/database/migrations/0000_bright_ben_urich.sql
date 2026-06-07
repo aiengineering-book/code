@@ -1,7 +1,7 @@
 CREATE TABLE "conversations" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"user_id" uuid NOT NULL,
-	"title" text DEFAULT '新对话' NOT NULL,
+	"title" text DEFAULT 'New conversation' NOT NULL,
 	"summary" text,
 	"compressed_turns" integer DEFAULT 0 NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,

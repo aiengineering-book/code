@@ -1,0 +1,24 @@
+{
+  "name": "@tsaibook/ch03-server-patterns-server",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.0.0",
+    "@hono/zod-validator": "^0.8.0",
+    "hono": "^4.10.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
+    "@types/jsonwebtoken": "^9.0.0",
+    "@types/node": "^22.0.0",
+    "drizzle-kit": "^0.31.0"
+  }
+}

@@ -1,4 +1,5 @@
-// #book-ref ch11-rag/server/src/lib/llm.ts
+// #book-ref ch06-llm-api/server/src/lib/llm.ts
+
 import type { ChatCompletionMessageParam } from 'openai/resources/chat/completions.js';
 import { ExternalServiceError } from '../errors.js';
 import { DEFAULT_MODEL, openai } from './openai.js';
@@ -12,7 +13,7 @@ export interface LLMCallOptions {
 }
 
 /**
- * Wrapper for non-streaming LLM calls: includes retry, error conversion, and token usage return
+ * Non-streaming LLM call with retry, error translation, and token tracking
  */
 export async function callLLM(
   messages: ChatCompletionMessageParam[],
@@ -36,8 +37,11 @@ export async function callLLM(
 
     const choice = response.choices[0]!;
     if (choice.finish_reason === 'length') {
-      // Output truncated: log a warning but do not throw (let the caller decide how to handle)
-      console.warn('[callLLM] output truncated; consider increasing maxTokens');
+      // Output truncated — log a warning but don't throw
+      //  (let the caller decide how to handle it)
+      console.warn(
+        '[callLLM] Output truncated — consider increasing maxTokens',
+      );
     }
 
     return {

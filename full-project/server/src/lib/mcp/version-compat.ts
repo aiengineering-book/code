@@ -1,7 +1,6 @@
-// #book-ref ch20-version-compat
-// ch20-mcp-client/server/src/lib/mcp/version-compat.ts
+// #book-ref ch20-mcp-client/server/src/lib/mcp/version-compat.ts
 
-const SUPPORTED_VERSIONS = ['2024-11-05'] as const;
+const SUPPORTED_VERSIONS = ['2024-11-05', '2025-03-26', '2025-11-05'] as const;
 type SupportedVersion = (typeof SUPPORTED_VERSIONS)[number];
 
 export interface VersionNegotiationResult {
@@ -52,11 +51,15 @@ export function negotiateVersion(
     return {
       version: serverVersion,
       compatible: false,
-      warnings: [`Server version is too old (${serverVersion}), no longer supported`],
+      warnings: [
+        `Server version is too old (${serverVersion}), no longer supported`,
+      ],
     };
   }
 
   // Older but potentially compatible version
-  warnings.push(`Server version (${serverVersion}) is older than current; upgrade recommended`);
+  warnings.push(
+    `Server version (${serverVersion}) is older than current; upgrade recommended`,
+  );
   return { version: serverVersion, compatible: true, warnings };
 }

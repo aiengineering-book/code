@@ -59,7 +59,8 @@ export class ReActAgent {
     const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
       {
         role: 'system',
-        content: 'You are a ReAct Agent. Think through the user\'s task and use tools to complete it.',
+        content:
+          "You are a ReAct Agent. Think through the user's task and use tools to complete it.",
       },
       { role: 'user', content: task },
     ];
@@ -112,7 +113,7 @@ export class ReActAgent {
         try {
           result = tool
             ? await tool.execute(parsedArgs)
-        : `Tool ${fnCall.name} not found`;
+            : `Tool ${fnCall.name} not found`;
         } catch (err) {
           result = `Tool execution failed: ${err instanceof Error ? err.message : String(err)}`;
         }

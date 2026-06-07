@@ -1,6 +1,5 @@
-// #book-ref ch12-production-rag/web/src/components/RAGAnswer.tsx
 // #book-ref ch11-rag/web/src/components/RAGAnswer.tsx
-// ch11-rag/web/src/components/RAGAnswer.tsx
+
 import { useState } from 'react';
 
 interface Citation {

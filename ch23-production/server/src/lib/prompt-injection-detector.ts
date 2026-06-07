@@ -14,18 +14,15 @@ const INJECTION_PATTERNS = [
     pattern: /ignore\s+(all\s+)?(previous|above|prior)\s+instructions?/i,
     weight: 0.9,
   },
-  { pattern: /忽略(之前|以上|前面).*指令/i, weight: 0.9 },
   { pattern: /disregard\s+(your\s+)?instructions?/i, weight: 0.8 },
 
   // Role switching
   { pattern: /you\s+are\s+now\s+(?!an?\s+assistant)/i, weight: 0.7 },
-  { pattern: /你(现在|从现在起)(是|变成|扮演)/i, weight: 0.7 },
   { pattern: /act\s+as\s+(?!an?\s+assistant)/i, weight: 0.6 },
 
   // System prompt leakage
   { pattern: /print\s+(your\s+)?(system\s+)?prompt/i, weight: 0.8 },
   { pattern: /repeat\s+(your\s+)?instructions?/i, weight: 0.7 },
-  { pattern: /输出.*系统提示/i, weight: 0.8 },
 
   // Privilege escalation
   {

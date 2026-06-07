@@ -31,7 +31,9 @@ export async function semanticChunk(
   }
 
   // 2. Generate embeddings for all sentences
-  console.log(`Semantic chunking: generating embeddings for ${sentences.length} sentences...`);
+  console.log(
+    `Semantic chunking: generating embeddings for ${sentences.length} sentences...`,
+  );
   const embeddings = await embedBatch(sentences);
 
   // 3. Find breakpoints (adjacent sentences with low similarity)

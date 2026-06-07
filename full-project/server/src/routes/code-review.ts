@@ -1,5 +1,4 @@
-// #book-ref ch17-code-review-route
-// ch17-coding-agent/server/src/routes/code-review.ts
+// #book-ref ch17-coding-agent/server/src/routes/code-review.ts
 
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';

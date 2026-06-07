@@ -16,8 +16,13 @@ export function resolveSandboxPath(userPath: string): string {
   // Resolve to an absolute path
   const resolved = path.resolve(SANDBOX_ROOT, userPath);
 
-  // Verify the resolved path is inside the sandbox
-  if (!resolved.startsWith(SANDBOX_ROOT)) {
+  // Verify the resolved path is inside the sandbox.
+  // Add a trailing slash to prevent prefix collisions like /tmp/work vs /tmp/work-evil
+  const sandboxPrefix = SANDBOX_ROOT.endsWith(path.sep)
+    ? SANDBOX_ROOT
+    : SANDBOX_ROOT + path.sep;
+
+  if (resolved !== SANDBOX_ROOT && !resolved.startsWith(sandboxPrefix)) {
     throw new Error(`Path "${userPath}" is outside the working directory`);
   }
 

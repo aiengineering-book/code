@@ -5,7 +5,7 @@ import { withRetry } from './retry.js';
 
 const EMBEDDING_MODEL = 'text-embedding-3-small';
 const EMBEDDING_DIMENSIONS = 1536;
-// Max texts per batch (OpenAI limit: 2,048)
+// Max texts per batch (OpenAI limit: 2048 per request)
 const BATCH_SIZE = 100;
 
 export interface EmbeddingResult {
@@ -26,7 +26,9 @@ export async function embedText(text: string): Promise<number[]> {
     }),
   );
 
-  return result.data[0]?.embedding;
+  const embedding = result.data[0]?.embedding;
+  if (!embedding) throw new Error('Embedding API returned no data');
+  return embedding;
 }
 
 /**
@@ -52,7 +54,7 @@ export async function embedBatch(
     for (let j = 0; j < batch.length; j++) {
       results.push({
         text: batch[j]!,
-        embedding: response.data[j]?.embedding,
+        embedding: response.data[j]!.embedding,
         tokens: response.usage.total_tokens / batch.length, // Average tokens (estimate)
       });
     }

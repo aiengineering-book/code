@@ -40,7 +40,8 @@ export class ReActAgent {
     this.tools = options.tools;
     this.maxSteps = options.maxSteps ?? 10;
     this.systemPrompt =
-  options.systemPrompt ?? 'You are an AI assistant that can use tools to solve problems.';
+      options.systemPrompt ??
+      'You are an AI assistant that can use tools to solve problems.';
     this.onStep = options.onStep;
     this.client = new OpenAI();
   }
@@ -112,7 +113,7 @@ export class ReActAgent {
         try {
           result = tool
             ? await tool.execute(parsedArgs)
-        : `Tool ${fnCall.name} not found`;
+            : `Tool ${fnCall.name} not found`;
         } catch (err) {
           result = `Tool execution failed: ${err instanceof Error ? err.message : String(err)}`;
         }

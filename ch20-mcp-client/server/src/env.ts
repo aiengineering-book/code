@@ -1,4 +1,5 @@
-// #book-ref ch17-coding-agent/server/src/env.ts
+// #book-ref ch06-llm-api/server/src/env.ts
+
 import 'dotenv/config';
 
 function required(key: string): string {
@@ -9,6 +10,7 @@ function required(key: string): string {
 
 export const env = {
   OPENAI_API_KEY: required('OPENAI_API_KEY'),
+  DATABASE_URL: required('DATABASE_URL'),
   PORT: Number(process.env.PORT ?? 3000),
   NODE_ENV: process.env.NODE_ENV ?? 'development',
 };

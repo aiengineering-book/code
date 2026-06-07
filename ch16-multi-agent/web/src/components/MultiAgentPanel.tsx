@@ -93,7 +93,8 @@ export function MultiAgentPanel() {
             );
           }
 
-          if (data.type === 'synthesizing') setPhase('✍️ Synthesizing results...');
+          if (data.type === 'synthesizing')
+            setPhase('✍️ Synthesizing results...');
 
           if (data.type === 'result') {
             setFinalAnswer(data.answer);
@@ -134,7 +135,8 @@ export function MultiAgentPanel() {
     <div style={{ maxWidth: 900, margin: '0 auto', padding: '2rem 1rem' }}>
       <h2>Multi-Agent Task System</h2>
       <p style={{ color: '#6b7280', marginBottom: 24 }}>
-        Enter a complex goal — the system will automatically decompose it into parallel subtasks
+        Enter a complex goal — the system will automatically decompose it into
+        parallel subtasks
       </p>
 
       {/* Input area */}

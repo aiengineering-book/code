@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/tools/web/search-tool.ts
+// ch14-tool-calling/server/src/lib/agent/tools/web/search-tool.ts
 // #book ch14-search-tool
 // ch14-tool-calling/server/src/lib/agent/tools/web/search-tool.ts
 import { z } from 'zod';
@@ -20,7 +20,8 @@ Returns up to 10 results with title, URL, and a short excerpt.`,
     properties: {
       query: {
         type: 'string',
-        description: 'Search query — concise keywords work better than full sentences',
+        description:
+          'Search query — concise keywords work better than full sentences',
       },
       maxResults: {
         type: 'number',

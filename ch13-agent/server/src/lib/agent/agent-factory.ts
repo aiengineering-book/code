@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/agent-factory.ts
+// ch13-agent/server/src/lib/agent/agent-factory.ts
 // #book ch13-agent-factory
 // ch13-agent/server/src/lib/agent/agent-factory.ts
 

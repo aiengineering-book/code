@@ -1,5 +1,5 @@
-// #book-ref ch12-production-rag/server/src/services/rag-service.ts
 // #book-ref ch11-rag/server/src/services/rag-service.ts
+
 import { db } from '../database/client.js';
 import { callLLM } from '../lib/llm.js';
 import { DEFAULT_MODEL, openai } from '../lib/openai.js';
@@ -128,7 +128,11 @@ export class RAGService {
     });
 
     if (retrieved.length === 0) {
-      yield { type: 'delta', text: 'Sorry, no relevant content was found in the knowledge base.' };
+      yield { type: 'citations', citations: [] };
+      yield {
+        type: 'delta',
+        text: 'Sorry, no relevant content was found in the knowledge base.',
+      };
       yield { type: 'done' };
       return;
     }

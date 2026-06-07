@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/tools/data/database-tool.ts
+// ch14-tool-calling/server/src/lib/agent/tools/data/database-tool.ts
 // #book ch14-database-tool
 // ch14-tool-calling/server/src/lib/agent/tools/data/database-tool.ts
 
@@ -22,8 +22,11 @@ function validateQuery(query: string): void {
   const upperQuery = query.trim().toUpperCase();
 
   for (const keyword of FORBIDDEN_KEYWORDS) {
-    if (upperQuery.includes(keyword)) {
-      throw new Error(`Operation not allowed: ${keyword}. Only SELECT queries are supported.`);
+    // Use word boundaries to avoid matching column names like DELETED_AT or CREATED_BY
+    if (new RegExp(`\\b${keyword}\\b`).test(upperQuery)) {
+      throw new Error(
+        `Operation not allowed: ${keyword}. Only SELECT queries are supported.`,
+      );
     }
   }
 
@@ -69,8 +72,11 @@ Available tables: users, todos, conversations, documents, usage_logs`,
     try {
       validateQuery(query);
 
-      // Append LIMIT to prevent excessive data return
-      const limitedQuery = query.replace(/;?\s*$/, ` LIMIT ${maxRows}`);
+      // Append LIMIT only if the query doesn't already have one
+      const hasLimit = /\bLIMIT\b/i.test(query);
+      const limitedQuery = hasLimit
+        ? query.replace(/;?\s*$/, '')
+        : query.replace(/;?\s*$/, ` LIMIT ${maxRows}`);
 
       // db.execute returns a postgres.js RowList (which is already an array)
       const result = await db.execute(sql.raw(limitedQuery));

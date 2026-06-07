@@ -4,6 +4,29 @@
 import { browserManager } from '../../browser/manager.js';
 import type { Tool } from '../react-agent.js';
 
+const BLOCKED_HOSTS = [
+  'localhost',
+  '127.0.0.1',
+  '0.0.0.0',
+  '::1',
+  '192.168.',
+  '10.',
+  '172.',
+];
+
+/**
+ * Shared URL validation for all browser tools
+ */
+function validateUrl(url: string): string | null {
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    return 'Error: only http:// and https:// protocols are supported';
+  }
+  if (BLOCKED_HOSTS.some((b) => url.includes(b))) {
+    return 'Error: internal network addresses are not allowed';
+  }
+  return null;
+}
+
 /**
  * Tool 1: Fetch web page content
  */
@@ -29,24 +52,8 @@ export const fetchWebpageTool: Tool = {
   execute: async (input) => {
     const { url, waitFor } = input as { url: string; waitFor?: string };
 
-    // Security: only HTTP/HTTPS
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-      return 'Error: only http:// and https:// protocols are supported';
-    }
-
-    // Blocklist: no internal network addresses
-    const blocked = [
-      'localhost',
-      '127.0.0.1',
-      '0.0.0.0',
-      '::1',
-      '192.168.',
-      '10.',
-      '172.',
-    ];
-    if (blocked.some((b) => url.includes(b))) {
-      return 'Error: internal network addresses are not allowed';
-    }
+    const urlError = validateUrl(url);
+    if (urlError) return urlError;
 
     const context = await browserManager.createContext();
     const page = await context.newPage();
@@ -115,7 +122,8 @@ export const screenshotTool: Tool = {
       },
       fullPage: {
         type: 'string',
-        description: 'Whether to capture the full page, "true" or "false", default "false"',
+        description:
+          'Whether to capture the full page, "true" or "false", default "false"',
         enum: ['true', 'false'],
       },
     },
@@ -128,9 +136,8 @@ export const screenshotTool: Tool = {
       fullPage?: string;
     };
 
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-      return 'Error: only http:// and https:// protocols are supported';
-    }
+    const urlError = validateUrl(url);
+    if (urlError) return urlError;
 
     const context = await browserManager.createContext();
     const page = await context.newPage();
@@ -166,7 +173,8 @@ export const screenshotTool: Tool = {
  */
 export const interactWithPageTool: Tool = {
   name: 'interact_with_page',
-  description: 'Interact with a web page: click buttons, fill forms, wait for elements.',
+  description:
+    'Interact with a web page: click buttons, fill forms, wait for elements.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -190,9 +198,8 @@ Example: [
       actions: string;
     };
 
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-      return 'Error: only http:// and https:// protocols are supported';
-    }
+    const urlError = validateUrl(url);
+    if (urlError) return urlError;
 
     let actions: Array<{
       type: 'click' | 'fill' | 'wait' | 'extract' | 'select';

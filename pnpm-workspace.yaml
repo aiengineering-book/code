@@ -1,8 +1,10 @@
 packages:
   - "ch01-hello-ai"
   - "ch02-dev-env/**"
+  - "ch03-server-patterns/**"
   - "ch04-fullstack-basics/**"
   - "ch06-llm-api/**"
+  - "ch07-prompt-engineering/**"
   - "ch08-conversation/**"
   - "ch09-embedding/**"
   - "ch10-ingestion/**"

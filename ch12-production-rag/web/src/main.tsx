@@ -1,4 +1,5 @@
-// #book-ref ch11-rag/web/src/main.tsx
+// #book-ref ch10-ingestion/web/src/main.tsx
+
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.js';

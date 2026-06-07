@@ -1,4 +1,5 @@
-// #book-ref ch12-production-rag/server/src/services/retrieval-service.ts
+// #book-ref ch11-rag/server/src/services/retrieval-service.ts
+
 import { env } from '../env.js';
 import { rerank } from '../lib/reranker.js';
 import { hybridSearch } from './hybrid-search.js';
@@ -23,7 +24,7 @@ export async function retrieve(
 ): Promise<RetrievalResult[]> {
   const { limit = 5, minScore = 0.3, documentId, useRerank = true } = options;
 
-  // Fetch extra candidates to give reranking more material
+  // Fetch more candidates to give the reranker material to work with
   const candidates = await hybridSearch(query, {
     limit: useRerank ? limit * 3 : limit,
     minScore: 0,
@@ -32,7 +33,7 @@ export async function retrieve(
 
   if (candidates.length === 0) return [];
 
-  // Rerank when Cohere key is set and there are enough candidates
+  // Rerank if configured and there are enough candidates
   if (useRerank && env.COHERE_API_KEY && candidates.length > limit) {
     try {
       const reranked = await rerank(query, candidates, limit);
@@ -43,8 +44,8 @@ export async function retrieve(
           rerankScore: r.relevanceScore,
         }));
     } catch (error) {
-      // Reranking failed — fall back to hybrid retrieval results
-      console.warn('[retrieve] Reranking failed, falling back:', error);
+      // Reranking failed — degrade to hybrid search results
+      console.warn('[retrieve] Reranking failed, degrading:', error);
     }
   }
 

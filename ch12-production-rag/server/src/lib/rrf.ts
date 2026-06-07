@@ -1,4 +1,5 @@
 // #book-ref ch11-rag/server/src/lib/rrf.ts
+
 export interface RankedResult {
   id: string;
   content: string;
@@ -8,7 +9,7 @@ export interface RankedResult {
 }
 
 /**
- * RRF formula: score(d) = Σ 1/(k + rank(d)), k is typically 60
+ * RRF formula: score(d) = Σ 1/(k + rank(d)), k typically = 60
  */
 export function reciprocalRankFusion(
   rankings: RankedResult[][],

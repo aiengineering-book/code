@@ -1,5 +1,4 @@
-// #book-ref ch22-vision-service
-// ch22-multimodal/server/src/services/vision-service.ts
+// #book-ref ch22-multimodal/server/src/services/vision-service.ts
 
 import { z } from 'zod';
 import { analyzeImage } from '../lib/vision.js';

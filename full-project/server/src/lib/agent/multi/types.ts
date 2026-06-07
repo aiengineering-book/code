@@ -1,5 +1,4 @@
-// #book-ref ch16-multi-types
-// ch16-multi-agent/server/src/lib/agent/multi/types.ts
+// #book-ref ch16-multi-agent/server/src/lib/agent/multi/types.ts
 
 export interface SubTask {
   id: string;

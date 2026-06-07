@@ -1,5 +1,4 @@
-// #book-ref ch08-chatbot-route
-// ch08-conversation/server/src/routes/chatbot.ts
+// #book-ref ch08-conversation/server/src/routes/chatbot.ts
 
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
@@ -87,7 +86,8 @@ const chatbotRouter = new Hono<Env>()
         await stream.writeSSE({
           event: 'error',
           data: JSON.stringify({
-            message: error instanceof Error ? error.message : 'An error occurred',
+            message:
+              error instanceof Error ? error.message : 'An error occurred',
           }),
         });
       }

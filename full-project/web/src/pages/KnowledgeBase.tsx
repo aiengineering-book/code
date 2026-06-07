@@ -39,7 +39,9 @@ export function KnowledgeBasePage(_props: { kbId: string }) {
     setLoading(false);
 
     if (!res.ok || !res.body) {
-      setAnswer('Request failed. Please check that the backend service is running.');
+      setAnswer(
+        'Request failed. Please check that the backend service is running.',
+      );
       setIsStreaming(false);
       return;
     }

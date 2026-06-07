@@ -1,5 +1,5 @@
-// #book-ref ch08-chatbot-service
-// ch08-conversation/server/src/services/chatbot-service.ts
+// #book-ref ch08-conversation/server/src/services/chatbot-service.ts
+
 import { estimateCost, trackUsage } from '../lib/cost.js';
 import { DEFAULT_MODEL, openai } from '../lib/openai.js';
 import { getManagedContext } from './context-manager.js';

@@ -1,8 +1,9 @@
-// #book-ref ch20-mcp-client
-// ch20-mcp-client/server/src/lib/mcp/client.ts
+// #book-ref ch20-mcp-client/server/src/lib/mcp/client.ts
+
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
+import type { Transport } from '@modelcontextprotocol/sdk/shared/transport.js';
 import type {
   Prompt,
   Resource,
@@ -72,10 +73,15 @@ export class MCPClient {
           env: { ...process.env, ...this.config.env } as Record<string, string>,
         });
       } else {
-        throw new Error(`MCP Server "${this.config.name}" has no transport configured`);
+        throw new Error(
+          `MCP Server "${this.config.name}" has no transport configured`,
+        );
       }
 
-      await this.client.connect(this.transport as any);
+      // Cast needed: SDK's Transport interface uses exactOptionalPropertyTypes
+      // but StreamableHTTPClientTransport.sessionId is typed as string | undefined.
+      // This is an SDK type declaration issue, not a runtime incompatibility.
+      await this.client.connect(this.transport as unknown as Transport);
 
       // Fetch capability lists after connecting
       await this.refreshCapabilities();

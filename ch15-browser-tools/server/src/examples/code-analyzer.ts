@@ -24,10 +24,12 @@ Be specific and accurate — reference actual files and code lines.`,
 });
 
 const result = await agent.run(
-  'Analyze this project\'s architecture: list the main directory structure, find the entry file, and describe the major dependencies',
+  "Analyze this project's architecture: list the main directory structure, find the entry file, and describe the major dependencies",
 );
 
 console.log('\n=== Analysis Results ===');
 console.log(result.answer);
-console.log(`\nCompleted in ${result.totalSteps} steps, status: ${result.stopped}`);
+console.log(
+  `\nCompleted in ${result.totalSteps} steps, status: ${result.stopped}`,
+);
 // #endbook

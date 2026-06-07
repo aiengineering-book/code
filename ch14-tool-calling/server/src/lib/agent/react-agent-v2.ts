@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/react-agent-v2.ts
+// ch14-tool-calling/server/src/lib/agent/react-agent-v2.ts
 // Extends ch13 ReActAgent with parallel tool support, migrated to OpenAI Function Calling protocol
 
 import type {
@@ -50,7 +50,7 @@ export class ReActAgentV2 {
       maxTotalCalls: 20,
     });
 
-  // Convert Tool[] to OpenAI Function Calling format
+    // Convert Tool[] to OpenAI Function Calling format
     const openaiTools: ChatCompletionTool[] = tools.map((t) => ({
       type: 'function' as const,
       function: {
@@ -77,24 +77,25 @@ export class ReActAgentV2 {
       const message = response.choices[0]?.message;
       if (!message) break;
 
-  // Append the assistant reply (including tool_calls) to history
+      // Append the assistant reply (including tool_calls) to history
       messages.push(message);
 
-    // Only handle function-type tool calls
+      // Only handle function-type tool calls
       const toolCalls = (message.tool_calls ?? []).filter(
         (tc): tc is FunctionToolCall => tc.type === 'function',
       );
 
       // No tool calls = model has produced a final answer
       if (toolCalls.length === 0) {
-      const answer = message.content ?? 'Task complete, but no explicit answer.';
+        const answer =
+          message.content ?? 'Task complete, but no explicit answer.';
         const finalStep: AgentStep = { type: 'final_answer', content: answer };
         steps.push(finalStep);
         onStep?.(finalStep);
         return { answer, steps, totalSteps: step + 1, stopped: 'answer' };
       }
 
-    // Cycle detection: track before each tool execution
+      // Cycle detection: track before each tool execution
       for (const call of toolCalls) {
         try {
           const input = JSON.parse(call.function.arguments) as Record<
@@ -116,7 +117,7 @@ export class ReActAgentV2 {
         }
       }
 
-  // Execute all tool calls in parallel
+      // Execute all tool calls in parallel
       const execResults = await executeToolsParallel(toolCalls, tools, {
         maxConcurrency,
         timeoutMs,
@@ -139,7 +140,7 @@ export class ReActAgentV2 {
         }
       }
 
-    // Append tool results as role: 'tool' messages to history
+      // Append tool results as role: 'tool' messages to history
       const toolMessages = resultsToToolMessages(execResults);
       messages.push(...toolMessages);
     }
@@ -151,7 +152,7 @@ export class ReActAgentV2 {
       .join('\n\n');
 
     return {
-        answer: `Max step limit reached. Here is the progress so far:\n\n${lastResults}`,
+      answer: `Max step limit reached. Here is the progress so far:\n\n${lastResults}`,
       steps,
       totalSteps: maxSteps,
       stopped: 'max_steps',

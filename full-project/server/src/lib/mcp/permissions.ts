@@ -1,5 +1,4 @@
-// #book-ref ch20-mcp-permissions
-// ch20-mcp-client/server/src/lib/mcp/permissions.ts
+// #book-ref ch20-mcp-client/server/src/lib/mcp/permissions.ts
 
 export type RiskLevel = 'safe' | 'moderate' | 'dangerous';
 

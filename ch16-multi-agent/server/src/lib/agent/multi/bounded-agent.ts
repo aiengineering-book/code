@@ -39,7 +39,7 @@ export class BoundedSubagent {
       },
     });
 
-    return result.output;
+    return result.answer;
   }
 
   getStats() {

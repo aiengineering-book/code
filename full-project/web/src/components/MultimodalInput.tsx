@@ -1,5 +1,5 @@
-// #book-ref ch22-multimodal-input
-// ch22-multimodal/web/src/components/MultimodalInput.tsx
+// #book-ref ch22-multimodal/web/src/components/MultimodalInput.tsx
+
 import { useRef, useState } from 'react';
 import { getToken } from '../lib/api.js';
 
@@ -155,7 +155,9 @@ export function MultimodalInput() {
             ) : (
               <>
                 <div style={{ fontSize: 32, marginBottom: 8 }}>🖼️</div>
-                <div style={{ color: '#6b7280' }}>Click or drag an image to upload</div>
+                <div style={{ color: '#6b7280' }}>
+                  Click or drag an image to upload
+                </div>
                 <div style={{ fontSize: 12, color: '#9ca3af', marginTop: 4 }}>
                   Supports PNG, JPEG, GIF, WebP — max 5MB
                 </div>
@@ -255,7 +257,9 @@ export function MultimodalInput() {
           }}
         >
           <div style={{ fontSize: 12, color: '#94a3b8', marginBottom: 8 }}>
-            {result.type === 'image' ? 'Image analysis result' : 'Speech recognition result'}
+            {result.type === 'image'
+              ? 'Image analysis result'
+              : 'Speech recognition result'}
           </div>
           {result.text}
         </div>

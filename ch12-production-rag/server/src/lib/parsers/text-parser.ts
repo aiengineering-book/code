@@ -1,4 +1,5 @@
-// #book-ref ch11-rag/server/src/lib/parsers/text-parser.ts
+// #book-ref ch10-ingestion/server/src/lib/parsers/text-parser.ts
+
 import type { DocumentParser, ParsedDocument } from './types.js';
 
 export const textParser: DocumentParser = {

@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/tools/tool-tester.ts
+// ch14-tool-calling/server/src/lib/agent/tools/tool-tester.ts
 // #book ch14-tool-tester
 // ch14-tool-calling/server/src/lib/agent/tools/tool-tester.ts
 
@@ -6,9 +6,9 @@ import { DEFAULT_MODEL, openai } from '../../openai.js';
 import type { Tool } from '../react-agent.js';
 
 interface ToolTestCase {
-  description: string;         // What is this test checking
-  userMessage: string;         // User message that should trigger a tool call
-  expectedTool: string;        // Expected tool name
+  description: string; // What is this test checking
+  userMessage: string; // User message that should trigger a tool call
+  expectedTool: string; // Expected tool name
   expectedParams?: Record<string, unknown>; // Expected parameters (optional)
 }
 
@@ -40,7 +40,7 @@ export async function testToolSelection(
 
     const allCalls = response.choices[0]?.message.tool_calls ?? [];
     // Only handle function-type tool calls
-    const firstCall = allCalls.find((tc) => tc.type === 'function');
+    const firstCall = allCalls.find((call) => call.type === 'function');
 
     if (!firstCall || firstCall.type !== 'function') {
       failed++;

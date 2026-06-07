@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/parallel-executor.ts
+// ch14-tool-calling/server/src/lib/agent/parallel-executor.ts
 // #book ch14-parallel-executor
 // ch14-tool-calling/server/src/lib/agent/parallel-executor.ts
 import type { ChatCompletionMessageToolCall } from 'openai/resources/chat/completions.js';
@@ -27,7 +27,7 @@ export async function executeToolsParallel(
   tools: Tool[],
   options: {
     maxConcurrency?: number; // Max concurrent executions
-    timeoutMs?: number;      // Per-tool timeout
+    timeoutMs?: number; // Per-tool timeout
   } = {},
 ): Promise<ParallelExecutionResult[]> {
   const { maxConcurrency = 5, timeoutMs = 30_000 } = options;
@@ -65,7 +65,10 @@ export async function executeToolsParallel(
             tool.execute(input),
             new Promise<never>((_, reject) =>
               setTimeout(
-                () => reject(new Error(`Tool execution timed out (${timeoutMs}ms)`)),
+                () =>
+                  reject(
+                    new Error(`Tool execution timed out (${timeoutMs}ms)`),
+                  ),
                 timeoutMs,
               ),
             ),
@@ -75,7 +78,7 @@ export async function executeToolsParallel(
             toolCallId: call.id,
             toolName: call.function.name,
             input,
-            result,
+            result: typeof result === 'string' ? result : JSON.stringify(result, null, 2),
             durationMs: Date.now() - start,
           };
         } catch (error) {

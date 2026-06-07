@@ -216,7 +216,8 @@ export function CodeReview() {
             {/* Test results */}
             {result.testResults && (
               <div style={{ fontSize: 13, color: '#374151' }}>
-                🧪 Tests: {result.testResults.passed} passed / {result.testResults.failed} failed
+                🧪 Tests: {result.testResults.passed} passed /{' '}
+                {result.testResults.failed} failed
                 {' · '}
                 {result.testResults.summary}
               </div>
@@ -227,7 +228,8 @@ export function CodeReview() {
           {result.issues.length > 0 && (
             <div style={{ marginBottom: 24 }}>
               <h3 style={{ fontSize: 15, marginBottom: 12 }}>
-                {result.issues.length} issue{result.issues.length !== 1 ? 's' : ''} found
+                {result.issues.length} issue
+                {result.issues.length !== 1 ? 's' : ''} found
               </h3>
               {result.issues.map((issue, i) => {
                 const cfg = severityConfig[issue.severity];
@@ -322,7 +324,9 @@ export function CodeReview() {
           {/* Positives */}
           {result.positives.length > 0 && (
             <div>
-              <h3 style={{ fontSize: 15, marginBottom: 8 }}>👍 What's done well</h3>
+              <h3 style={{ fontSize: 15, marginBottom: 8 }}>
+                👍 What's done well
+              </h3>
               {result.positives.map((p, i) => (
                 <div
                   key={i}

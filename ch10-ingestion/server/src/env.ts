@@ -1,4 +1,5 @@
-// #book-ref ch09-embedding/server/src/env.ts
+// #book-ref ch06-llm-api/server/src/env.ts
+
 import 'dotenv/config';
 
 function required(key: string): string {

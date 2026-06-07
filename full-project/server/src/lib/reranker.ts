@@ -1,4 +1,5 @@
-// #book-ref ch12-production-rag/server/src/lib/reranker.ts
+// #book-ref ch11-rag/server/src/lib/reranker.ts
+
 import { CohereClient } from 'cohere-ai';
 import { env } from '../env.js';
 import { withRetry } from './retry.js';
@@ -20,7 +21,7 @@ export async function rerank<T extends { id: string; content: string }>(
 
   const response = await withRetry(() =>
     cohere.rerank({
-      model: 'rerank-multilingual-v3.0', // multilingual, including Chinese
+      model: 'rerank-multilingual-v3.0', // Multilingual
       query,
       documents: documents.map((d) => d.content),
       topN,
@@ -28,9 +29,9 @@ export async function rerank<T extends { id: string; content: string }>(
     }),
   );
 
-  return response.results.map((r) => ({
+  return response.results.map((r, position) => ({
     document: documents[r.index]!,
     relevanceScore: r.relevanceScore,
-    rank: r.index,
+    rank: position + 1,
   }));
 }

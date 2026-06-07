@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/call-tracker.ts
+// ch14-tool-calling/server/src/lib/agent/call-tracker.ts
 // #book ch14-call-tracker
 // ch14-tool-calling/server/src/lib/agent/call-tracker.ts
 
@@ -28,7 +28,7 @@ export class ToolCallTracker {
     if (duplicateCall) {
       throw new Error(
         `Loop detected: tool "${toolName}" called with identical parameters twice. ` +
-        `Verify that the tool result is being processed correctly.`,
+          `Verify that the tool result is being processed correctly.`,
       );
     }
 

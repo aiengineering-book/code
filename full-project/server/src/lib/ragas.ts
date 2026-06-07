@@ -1,5 +1,4 @@
-// #book-ref ch12-ragas
-// ch12-production-rag/server/src/lib/ragas.ts
+// #book-ref ch12-production-rag/server/src/lib/ragas.ts
 
 import { embedText } from './embedding.js';
 import { callLLM } from './llm.js';
@@ -84,7 +83,7 @@ async function evaluateContextPrecision(
   if (contexts.length === 0) return 0;
 
   const results = await Promise.all(
-    contexts.map(async (ctx) => {
+    contexts.slice(0, 5).map(async (ctx) => {
       const { text } = await callLLM(
         [
           {

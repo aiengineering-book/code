@@ -1,4 +1,5 @@
-// #book-ref ch10-ingestion/server/src/routes/search.ts
+// #book-ref ch09-embedding/server/src/routes/search.ts
+
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { z } from 'zod';
@@ -23,7 +24,7 @@ const searchRouter = new Hono()
       results: results.map((r) => ({
         id: r.id,
         content: r.content,
-        score: Math.round(r.score * 1000) / 1000, // Round to 3 decimal places
+        score: Math.round(r.score * 1000) / 1000, // 3 decimal places
         metadata: r.metadata,
       })),
     });

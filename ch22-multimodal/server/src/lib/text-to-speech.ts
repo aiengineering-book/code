@@ -32,7 +32,9 @@ export async function textToSpeech(
 
   // TTS has a character limit (4096 characters)
   if (text.length > 4096) {
-    throw new Error('Text must not exceed 4096 characters; please segment the input');
+    throw new Error(
+      'Text must not exceed 4096 characters; please segment the input',
+    );
   }
 
   const response = await openai.audio.speech.create({
@@ -57,7 +59,9 @@ export async function textToSpeechLong(
   const MAX_CHUNK = 4000; // Leave a small margin
 
   // Split on sentence boundaries to avoid cutting in the middle of a word
-  const sentences = text.match(/[^。！？.!?]+[。！？.!?]?/g) ?? [text];
+  const sentences = text.match(
+    /[^\u3002\uFF01\uFF1F.!?]+[\u3002\uFF01\uFF1F.!?]?/g,
+  ) ?? [text];
   const chunks: string[] = [];
   let current = '';
 

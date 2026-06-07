@@ -38,7 +38,7 @@ export const todos = pgTable(
 );
 
 // TypeScript types inferred from the schema — no manual interface maintenance
-export type User = typeof users.$inferSelect;    // Type of query results
+export type User = typeof users.$inferSelect; // Type of query results
 export type NewUser = typeof users.$inferInsert; // Type for inserts
 export type Todo = typeof todos.$inferSelect;
 export type NewTodo = typeof todos.$inferInsert;

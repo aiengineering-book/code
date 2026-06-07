@@ -87,7 +87,8 @@ const chatbotRouter = new Hono<Env>()
         await stream.writeSSE({
           event: 'error',
           data: JSON.stringify({
-            message: error instanceof Error ? error.message : 'An error occurred',
+            message:
+              error instanceof Error ? error.message : 'An error occurred',
           }),
         });
       }

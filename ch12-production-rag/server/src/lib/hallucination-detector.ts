@@ -17,7 +17,9 @@ export async function detectHallucination(
     return {
       hasHallucination: true,
       confidence: 0.9,
-      unsupportedClaims: ['No reference materials — all content may be hallucinated'],
+      unsupportedClaims: [
+        'No reference materials — all content may be hallucinated',
+      ],
       supportedClaims: [],
     };
   }

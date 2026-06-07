@@ -49,7 +49,8 @@ export async function imageFromUrl(url: string): Promise<{
   mediaType: ImageMediaType;
 }> {
   const response = await fetch(url);
-  if (!response.ok) throw new Error(`Image download failed: ${response.status}`);
+  if (!response.ok)
+    throw new Error(`Image download failed: ${response.status}`);
 
   const contentType = response.headers.get('content-type') ?? 'image/jpeg';
   const mediaType =

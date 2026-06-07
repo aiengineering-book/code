@@ -21,7 +21,7 @@ export async function rerank<T extends { id: string; content: string }>(
 
   const response = await withRetry(() =>
     cohere.rerank({
-      model: 'rerank-multilingual-v3.0', // Multilingual — handles English and others
+      model: 'rerank-multilingual-v3.0', // Multilingual
       query,
       documents: documents.map((d) => d.content),
       topN,
@@ -29,10 +29,10 @@ export async function rerank<T extends { id: string; content: string }>(
     }),
   );
 
-  return response.results.map((r) => ({
+  return response.results.map((r, position) => ({
     document: documents[r.index]!,
     relevanceScore: r.relevanceScore,
-    rank: r.index,
+    rank: position + 1,
   }));
 }
 // #endbook

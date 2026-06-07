@@ -1,5 +1,4 @@
-// #book-ref ch23-rate-limiter
-// ch23-production/server/src/middleware/rate-limiter.ts
+// #book-ref ch23-production/server/src/middleware/rate-limiter.ts
 
 import { and, eq, gte, sum } from 'drizzle-orm';
 import { db } from '../database/client.js';

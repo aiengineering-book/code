@@ -1,8 +1,9 @@
-// #book-ref ch11-rag/server/src/lib/chunkers/recursive.ts
+// #book-ref ch10-ingestion/server/src/lib/chunkers/recursive.ts
+
 import type { TextChunk } from './fixed-size.js';
 
 // Separator priority: paragraph > sentence > word > character
-const SEPARATORS = ['\n\n', '\n', '。', '！', '？', '.', '!', '?', ' ', ''];
+const SEPARATORS = ['\n\n', '\n', '.', '!', '?', ';', ' ', ''];
 
 export function recursiveChunk(
   text: string,
@@ -31,7 +32,7 @@ function splitRecursive(
   separators: string[],
   result: TextChunk[],
 ): void {
-  // Text is short enough — use as a single chunk
+  // Text short enough — it's one chunk
   if (text.length <= chunkSize) {
     if (text.trim()) {
       result.push({
@@ -44,11 +45,11 @@ function splitRecursive(
     return;
   }
 
-  // Try splitting with the current separator
+  // Try the current separator
   const [separator, ...remainingSeparators] = separators;
 
   if (separator === undefined) {
-    // All separators exhausted — force-split by size
+    // Exhausted all separators — force split by size
     for (let i = 0; i < text.length; i += chunkSize - overlap) {
       const chunk = text.slice(i, i + chunkSize).trim();
       if (chunk) {
@@ -77,7 +78,7 @@ function splitRecursive(
       // Current chunk is full — save and start a new one
       if (currentChunk.trim()) {
         if (currentChunk.length > chunkSize) {
-          // Current chunk too large — recurse with a finer separator
+          // Too large — recurse with a finer separator
           splitRecursive(
             currentChunk,
             currentStart,
@@ -96,7 +97,7 @@ function splitRecursive(
         }
       }
 
-      // New chunk starts at the overlap position
+      // New chunk starts with the overlap from the previous chunk
       const overlapText = currentChunk.slice(-overlap);
       currentChunk = overlapText ? overlapText + separator + part : part;
       currentStart += currentChunk.length - overlapText.length;

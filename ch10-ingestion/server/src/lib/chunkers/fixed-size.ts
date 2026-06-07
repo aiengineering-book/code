@@ -3,7 +3,7 @@
 
 export interface ChunkOptions {
   chunkSize: number; // Target chunk size in characters
-  overlap: number;   // Overlap between adjacent chunks in characters
+  overlap: number; // Overlap between adjacent chunks in characters
 }
 
 export interface TextChunk {

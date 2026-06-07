@@ -1,4 +1,5 @@
 // #book-ref ch08-conversation/server/src/lib/cost.ts
+
 // Price unit: USD per million tokens (based on official pricing; subject to change)
 const PRICING: Record<string, { input: number; output: number }> = {
   'gpt-4o': { input: 2.5, output: 10.0 },

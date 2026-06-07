@@ -67,7 +67,8 @@ export async function analyzePDF(
  * System dependency: poppler-utils (brew install poppler or apt-get install poppler-utils)
  */
 export async function ocrScannedPDF(pdfBuffer: Buffer): Promise<string> {
-  // @ts-expect-error — pdf2pic requires poppler-utils to be installed; see ch22.5 installation notes
+  // pdf2pic has no bundled type declarations; add a local .d.ts shim if needed.
+  // @ts-expect-error
   const { fromBuffer } = await import('pdf2pic');
 
   // 300 DPI is sufficient for OCR; higher values increase Vision token consumption

@@ -1,11 +1,8 @@
 // #book ch08-useChat
 // ch08-conversation/web/src/hooks/useChat.ts
 import { useCallback, useRef } from 'react';
+import { getToken } from '../lib/api.js';
 import { useChatStore } from '../stores/chat-store.js';
-
-function getToken(): string {
-  return localStorage.getItem('auth_token') ?? '';
-}
 
 export function useChat() {
   const store = useChatStore();
@@ -57,12 +54,14 @@ export function useChat() {
           signal: abortRef.current.signal,
         });
 
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         if (!res.body) throw new Error('No stream');
 
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
         let buffer = '';
         let assistantContent = '';
+        let finalized = false;
 
         while (true) {
           const { done, value } = await reader.read();
@@ -98,11 +97,25 @@ export function useChat() {
                   content: assistantContent,
                   createdAt: new Date().toISOString(),
                 });
+                finalized = true;
               }
             } catch {
               // Ignore parse errors on individual lines
             }
           }
+        }
+
+        // Guarantee finalize even if the done event never arrived
+        // (e.g. connection closed early or protocol changed)
+        if (!finalized && assistantContent) {
+          store.finalizeStreaming({
+            id: crypto.randomUUID(),
+            role: 'assistant',
+            content: assistantContent,
+            createdAt: new Date().toISOString(),
+          });
+        } else if (!finalized) {
+          store.setIsStreaming(false);
         }
       } catch (error) {
         if (error instanceof Error && error.name !== 'AbortError') {

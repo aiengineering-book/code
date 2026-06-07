@@ -1,4 +1,5 @@
-// #book-ref ch23-monitoring-route
+// #book-ref ch23-production/server/src/routes/monitoring.ts
+
 import { Hono } from 'hono';
 import { checkCostAlert, generateCostReport } from '../lib/cost-monitor.js';
 import { authMiddleware } from '../middleware/auth.js';
@@ -23,4 +24,3 @@ const monitoringRouter = new Hono()
   });
 
 export default monitoringRouter;
-// #endbook-ref

@@ -1,5 +1,4 @@
-// #book-ref ch08-context-manager
-// ch08-conversation/server/src/services/context-manager.ts
+// #book-ref ch08-conversation/server/src/services/context-manager.ts
 
 import { eq } from 'drizzle-orm';
 import type { ChatCompletionMessageParam } from 'openai/resources/chat/completions.js';
@@ -112,7 +111,10 @@ export async function getManagedContext(
   // Generate a summary (if a previous summary exists, include it with the new older messages)
   const messagesToSummarizeList = existingSummary
     ? [
-        { role: 'user' as const, content: `[Previous conversation summary] ${existingSummary}` },
+        {
+          role: 'user' as const,
+          content: `[Previous conversation summary] ${existingSummary}`,
+        },
         ...olderMessages,
       ]
     : olderMessages;
@@ -125,7 +127,11 @@ export async function getManagedContext(
       role: 'user',
       content: `[Conversation background summary]\n${newSummary}\n\nHere are the most recent exchanges:`,
     },
-    { role: 'assistant', content: 'Understood. I have the context from our earlier conversation. Please continue.' },
+    {
+      role: 'assistant',
+      content:
+        'Understood. I have the context from our earlier conversation. Please continue.',
+    },
     ...recentMessages,
   ];
 

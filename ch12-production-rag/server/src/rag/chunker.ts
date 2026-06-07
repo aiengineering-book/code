@@ -27,16 +27,16 @@ export function chunkWithOverlap(
   return chunks;
 }
 
-  // Recommended: chunk size 800 chars, overlap 150 chars
-  // ~15-20% overlap ratio; too low still leaves boundary issues, too high raises cost and duplicates results
+// Recommended: chunk size 800 chars, overlap 150 chars
+// ~15-20% overlap ratio; too low still leaves boundary issues, too high raises cost and duplicates results
 export const DEFAULT_CHUNK_OPTIONS: ChunkOptions = {
   chunkSize: 800,
   overlap: 150,
 };
 
-    // Split on semantic boundaries (paragraphs); paragraphs over maxChunkSize are re-split with a sliding window
+// Split on semantic boundaries (paragraphs); paragraphs over maxChunkSize are re-split with a sliding window
 export function chunkBySemantic(text: string, maxChunkSize = 800): string[] {
-    // Split on double newlines (paragraph boundaries)
+  // Split on double newlines (paragraph boundaries)
   const paragraphs = text.split(/\n{2,}/);
   const chunks: string[] = [];
   let currentChunk = '';

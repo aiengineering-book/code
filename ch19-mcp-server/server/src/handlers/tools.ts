@@ -4,18 +4,24 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { McpError } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
+import { searchInFilesTool } from '../lib/agent/tools/file-tools.js';
 
 export function registerToolHandlers(server: McpServer) {
-  // The SDK automatically serializes the handler's return value into a JSON-RPC response frame,
-  // written back to stdout (stdio transport) or pushed to the SSE stream (Streamable HTTP).
-  // You only need to return data — no manual res.json(), res.write(), or console.log needed.
+  // The SDK automatically serializes the handler's return value into a
+  //   JSON-RPC response frame, written back to stdout (stdio transport) or
+  //   pushed to the SSE stream (Streamable HTTP).
+  // You only need to return data
+  //   — no manual res.json(), res.write(), or console.log needed.
 
   server.tool(
     'query_knowledge_base',
     'Search the knowledge base for relevant content and return the most relevant document chunks with source citations. Best for answering questions based on internal documents.',
     {
       question: z.string().describe('The question to query'),
-      limit: z.number().optional().describe('Maximum number of results to return, default 5'),
+      limit: z
+        .number()
+        .optional()
+        .describe('Maximum number of results to return, default 5'),
     },
     async ({ question, limit = 5 }) => {
       try {
@@ -45,7 +51,9 @@ export function registerToolHandlers(server: McpServer) {
       fileExtension: z
         .string()
         .optional()
-        .describe('Restrict search to this file type, e.g. ".ts" ".py" (optional)'),
+        .describe(
+          'Restrict search to this file type, e.g. ".ts" ".py" (optional)',
+        ),
     },
     async ({ pattern, fileExtension }) => {
       try {
@@ -142,32 +150,12 @@ async function handleSearchCode(args: {
   pattern: string;
   fileExtension?: string | undefined;
 }) {
-  const { pattern, fileExtension } = args;
-
-  // Implementation: call the file search tool (provided by packages/server in the monorepo)
-  let searchResult: string | null = null;
-  try {
-    // @ts-expect-error — path exists in the full monorepo; standalone build falls through to catch
-    const mod = await import(
-      '../../packages/server/src/lib/agent/tools/file-tools.js'
-    );
-    searchResult = await mod.searchInFilesTool.execute({
-      pattern,
-      filePattern: fileExtension,
-    });
-  } catch {
-    return {
-      content: [
-        {
-          type: 'text' as const,
-          text: 'Code search service not available',
-        },
-      ],
-    };
-  }
-
+  const result = await searchInFilesTool.execute({
+    pattern: args.pattern,
+    filePattern: args.fileExtension,
+  });
   return {
-    content: [{ type: 'text' as const, text: searchResult ?? '' }],
+    content: [{ type: 'text' as const, text: result as string }],
   };
 }
 

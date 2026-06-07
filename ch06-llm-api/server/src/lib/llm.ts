@@ -37,8 +37,11 @@ export async function callLLM(
 
     const choice = response.choices[0]!;
     if (choice.finish_reason === 'length') {
-      // Output truncated — log a warning but don't throw (let the caller decide how to handle it)
-      console.warn('[callLLM] Output truncated — consider increasing maxTokens');
+      // Output truncated — log a warning but don't throw
+      //  (let the caller decide how to handle it)
+      console.warn(
+        '[callLLM] Output truncated — consider increasing maxTokens',
+      );
     }
 
     return {

@@ -1,4 +1,4 @@
-// packages/server/src/lib/agent/tools/weather-tool.ts
+// ch14-tool-calling/server/src/lib/agent/tools/weather-tool.ts
 // #book ch14-weather-tool
 // ch14-tool-calling/server/src/lib/agent/tools/weather-tool.ts
 import { z } from 'zod';
@@ -56,7 +56,9 @@ Supports city names in English and other languages.`;
     );
 
     if (!response.ok) {
-      throw new Error(`Weather API error: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Weather API error: ${response.status} ${response.statusText}`,
+      );
     }
 
     const data = (await response.json()) as {

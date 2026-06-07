@@ -1,8 +1,7 @@
-// #book-ref ch12-kb-router
-// ch12-production-rag/server/src/routes/knowledge-bases.ts
+// #book-ref ch12-production-rag/server/src/routes/knowledge-bases.ts
 
 import { zValidator } from '@hono/zod-validator';
-import { eq, or } from 'drizzle-orm';
+import { eq, inArray, or } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { streamSSE } from 'hono/streaming';
 import { z } from 'zod';
@@ -39,10 +38,20 @@ const kbRouter = new Hono<Env>()
 
   .get('/', async (c) => {
     const userId = c.get('userId');
+    const memberKbIds = await db
+      .select({ id: knowledgeBaseMembers.knowledgeBaseId })
+      .from(knowledgeBaseMembers)
+      .where(eq(knowledgeBaseMembers.userId, userId));
     const list = await db.query.knowledgeBases.findMany({
       where: or(
         eq(knowledgeBases.ownerId, userId),
         eq(knowledgeBases.visibility, 'public'),
+        memberKbIds.length > 0
+          ? inArray(
+              knowledgeBases.id,
+              memberKbIds.map((r) => r.id),
+            )
+          : undefined,
       ),
       orderBy: (kb, { desc }) => [desc(kb.updatedAt)],
     });

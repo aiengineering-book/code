@@ -1,5 +1,4 @@
-// #book-ref ch23-cost-monitor
-// ch23-production/server/src/lib/cost-monitor.ts
+// #book-ref ch23-production/server/src/lib/cost-monitor.ts
 
 import { gte, sum } from 'drizzle-orm';
 import { db } from '../database/client.js';

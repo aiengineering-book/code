@@ -15,7 +15,8 @@ export async function structuredOutput<T>(
       {
         role: 'system' as const,
         content: [
-          systemMessage ?? 'You are a data format conversion assistant. Convert precisely without adding content.',
+          systemMessage ??
+            'You are a data format conversion assistant. Convert precisely without adding content.',
           '',
           'Output must strictly follow the JSON Schema below:',
           JSON.stringify(jsonSchema, null, 2),
@@ -42,7 +43,8 @@ export async function structuredOutputWithFeedback<T extends z.ZodTypeAny>(
       {
         role: 'system' as const,
         content: [
-          systemMessage ?? 'You are a data format conversion assistant. Convert precisely without adding content.',
+          systemMessage ??
+            'You are a data format conversion assistant. Convert precisely without adding content.',
           '',
           'Output must strictly follow the JSON Schema below:',
           JSON.stringify(jsonSchema, null, 2),

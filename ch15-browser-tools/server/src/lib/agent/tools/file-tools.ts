@@ -10,13 +10,15 @@ import { ensureSandbox, resolveSandboxPath, SANDBOX_ROOT } from './sandbox.js';
  */
 export const readFileTool: Tool = {
   name: 'read_file',
-  description: 'Read the contents of a file. Only files within the working directory are accessible.',
+  description:
+    'Read the contents of a file. Only files within the working directory are accessible.',
   inputSchema: {
     type: 'object',
     properties: {
       filePath: {
         type: 'string',
-        description: 'File path relative to the working directory, e.g. "reports/q1.md"',
+        description:
+          'File path relative to the working directory, e.g. "reports/q1.md"',
       },
       encoding: {
         type: 'string',
@@ -137,11 +139,13 @@ export const listDirectoryTool: Tool = {
     properties: {
       dirPath: {
         type: 'string',
-        description: 'Directory path relative to the working directory, leave empty for root',
+        description:
+          'Directory path relative to the working directory, leave empty for root',
       },
       recursive: {
         type: 'string',
-        description: 'Whether to list subdirectories recursively, "true" or "false", default "false"',
+        description:
+          'Whether to list subdirectories recursively, "true" or "false", default "false"',
         enum: ['true', 'false'],
       },
     },
@@ -224,7 +228,8 @@ async function listRecursive(
  */
 export const searchInFilesTool: Tool = {
   name: 'search_in_files',
-  description: 'Search files in the working directory for lines containing specific text.',
+  description:
+    'Search files in the working directory for lines containing specific text.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -234,7 +239,8 @@ export const searchInFilesTool: Tool = {
       },
       filePattern: {
         type: 'string',
-        description: 'Restrict search to files with this extension, e.g. ".ts" or ".md" (optional)',
+        description:
+          'Restrict search to files with this extension, e.g. ".ts" or ".md" (optional)',
       },
     },
     required: ['pattern'],
@@ -275,7 +281,10 @@ export const searchInFilesTool: Tool = {
           const lines = content.split('\n');
           const matches = lines
             .map((line, i) => ({ line, lineNum: i + 1 }))
-            .filter(({ line }) => regex.test(line));
+            .filter(({ line }) => {
+              regex.lastIndex = 0; // Reset for global regex before each test
+              return regex.test(line);
+            });
 
           if (matches.length > 0) {
             const relPath = path.relative(SANDBOX_ROOT, fullPath);

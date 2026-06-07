@@ -1,7 +1,8 @@
 // #book-ref ch10-ingestion/server/src/lib/chunkers/fixed-size.ts
+
 export interface ChunkOptions {
-  chunkSize: number; // Target size per chunk (in characters)
-  overlap: number; // Overlapping characters between adjacent chunks
+  chunkSize: number; // Target chunk size in characters
+  overlap: number; // Overlap between adjacent chunks in characters
 }
 
 export interface TextChunk {
@@ -29,10 +30,10 @@ export function fixedSizeChunk(
       index++;
     }
 
-    // Next chunk starts at (end - overlap) to implement overlap
+    // Next chunk starts at (end - overlap) to create the overlap
     start = end - overlap;
 
-    // Guard against infinite loop (when text is shorter than chunkSize)
+    // Prevent infinite loop (when text is shorter than chunkSize)
     if (start >= text.length || end === text.length) break;
   }
 

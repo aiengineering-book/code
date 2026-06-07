@@ -1,4 +1,5 @@
-// #book-ref ch12-production-rag/server/src/lib/parsers/index.ts
+// #book-ref ch10-ingestion/server/src/lib/parsers/index.ts
+
 import { htmlParser } from './html-parser.js';
 import { markdownParser } from './markdown-parser.js';
 import { pdfParser } from './pdf-parser.js';
@@ -13,7 +14,7 @@ const parsers: DocumentParser[] = [
 ];
 
 /**
- * Select a parser based on MIME type
+ * Select a parser by MIME type
  */
 export function getParser(mimeType: string): DocumentParser | null {
   return parsers.find((p) => p.supportedTypes.includes(mimeType)) ?? null;

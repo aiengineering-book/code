@@ -1,4 +1,5 @@
-// #book-ref ch08-conversation/server/src/lib/retry.ts
+// #book-ref ch06-llm-api/server/src/lib/retry.ts
+
 import OpenAI from 'openai';
 
 export interface RetryOptions {
@@ -20,7 +21,7 @@ function getRetryAfterMs(error: unknown): number | null {
   if (error instanceof OpenAI.RateLimitError) {
     const headers = error.headers;
     if (headers) {
-      const retryAfter = headers['retry-after'];
+      const retryAfter = headers.get('retry-after');
       if (retryAfter) return Number(retryAfter) * 1000;
     }
   }

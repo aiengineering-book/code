@@ -37,7 +37,9 @@ server.tool(
   async ({ sql: query, limit }) => {
     if (!isSelectOnly(query)) {
       return {
-        content: [{ type: 'text' as const, text: 'Only SELECT queries are allowed' }],
+        content: [
+          { type: 'text' as const, text: 'Only SELECT queries are allowed' },
+        ],
         isError: true,
       };
     }
@@ -52,7 +54,11 @@ server.tool(
       const rows = await sql.unsafe(safeQuery);
 
       if (rows.length === 0)
-        return { content: [{ type: 'text' as const, text: 'Query returned no results' }] };
+        return {
+          content: [
+            { type: 'text' as const, text: 'Query returned no results' },
+          ],
+        };
 
       // Format as table
       const headers = Object.keys(rows[0] as object);
@@ -92,7 +98,10 @@ server.tool(
   'db_schema',
   'View database table structure',
   {
-    tableName: z.string().optional().describe('Table name (leave empty to list all tables)'),
+    tableName: z
+      .string()
+      .optional()
+      .describe('Table name (leave empty to list all tables)'),
   },
   async ({ tableName }) => {
     if (tableName) {
@@ -110,7 +119,10 @@ server.tool(
         .join('\n');
       return {
         content: [
-          { type: 'text' as const, text: `Structure of table ${tableName}:\n${text}` },
+          {
+            type: 'text' as const,
+            text: `Structure of table ${tableName}:\n${text}`,
+          },
         ],
       };
     }
@@ -125,7 +137,9 @@ server.tool(
       .map((t) => `  ${t.table_name} (${t.table_type})`)
       .join('\n');
     return {
-      content: [{ type: 'text' as const, text: `Tables in database:\n${text}` }],
+      content: [
+        { type: 'text' as const, text: `Tables in database:\n${text}` },
+      ],
     };
   },
 );
@@ -140,7 +154,10 @@ server.tool(
     if (!isSelectOnly(query)) {
       return {
         content: [
-          { type: 'text' as const, text: 'EXPLAIN only supports SELECT queries' },
+          {
+            type: 'text' as const,
+            text: 'EXPLAIN only supports SELECT queries',
+          },
         ],
         isError: true,
       };

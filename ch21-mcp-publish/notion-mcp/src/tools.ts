@@ -68,7 +68,8 @@ export const notionTools: Tool[] = [
   // Tool 2: Read page content
   {
     name: 'notion_get_page',
-    description: 'Read the full content of a Notion page, converted to Markdown format',
+    description:
+      'Read the full content of a Notion page, converted to Markdown format',
     inputSchema: {
       pageId: z
         .string()
@@ -120,7 +121,9 @@ export const notionTools: Tool[] = [
         .string()
         .max(10000)
         .default('')
-        .describe('Page content (plain text, paragraphs separated by blank lines)'),
+        .describe(
+          'Page content (plain text, paragraphs separated by blank lines)',
+        ),
     },
     execute: async (args) => {
       const { parentId, parentType, title, content } = args as {
@@ -216,7 +219,8 @@ export const notionTools: Tool[] = [
         page_size: limit,
       });
 
-      if (response.results.length === 0) return 'Database query returned no results';
+      if (response.results.length === 0)
+        return 'Database query returned no results';
 
       const rows = response.results.map((page, i) => {
         if (!('properties' in page)) return `Row ${i + 1}: (no properties)`;

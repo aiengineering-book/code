@@ -1,4 +1,5 @@
-// #book-ref ch12-production-rag/server/src/services/bm25-service.ts
+// #book-ref ch11-rag/server/src/services/bm25-service.ts
+
 import { BM25Index } from '@tsaibook/bm25';
 import { db } from '../database/client.js';
 
@@ -9,17 +10,19 @@ interface BM25Doc {
 }
 
 /**
- * Chinese tokenization (simple version: split by character)
- * Production: consider nodejieba or a tokenization API
+ * Tokenizer (simple version: splits on word boundaries)
+ * For production use of languages with no spaces (Chinese, Japanese),
+ * consider nodejieba or a tokenization API
  */
 function tokenize(text: string): string[] {
   const tokens: string[] = [];
 
-  const chineseWords = text.match(/[\u4e00-\u9fa5]+/g) ?? [];
+  // Extract word-like sequences
   const englishWords = text.toLowerCase().match(/[a-z0-9]+/g) ?? [];
 
-  // Chinese: split by bigrams (single chars + pairs)
-  for (const word of chineseWords) {
+  // For any non-ASCII sequences, use character bigrams
+  const nonAscii = text.match(/[^\x00-\x7F]+/g) ?? [];
+  for (const word of nonAscii) {
     for (let i = 0; i < word.length; i++) {
       tokens.push(word[i]!);
       if (i < word.length - 1) tokens.push(word[i]! + word[i + 1]!);
