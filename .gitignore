@@ -24,3 +24,4 @@ template/
 tsconfig copy.json
 zh-lines*.json
 lost-comments*.json
+scan-duplication.test.ts
